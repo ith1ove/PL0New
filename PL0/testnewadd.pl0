@@ -1,0 +1,7 @@
+PROGRAM testnewadd;
+BEGIN
+    +=;
+    -=;
+    ++;
+    --
+END.

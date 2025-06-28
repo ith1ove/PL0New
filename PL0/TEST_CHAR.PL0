@@ -1,0 +1,14 @@
+PROGRAM SIMPLE_CHAR_TEST;
+CHAR c;
+
+BEGIN
+    c := 'A';
+    WRITEC(c);   // 输出字符A
+    
+    c := 'B';
+    WRITEC(c);   // 输出字符B
+    
+    // 测试字符常量
+    WRITEC('H');
+    WRITEC('i');
+END.

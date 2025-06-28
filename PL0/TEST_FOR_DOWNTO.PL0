@@ -1,0 +1,7 @@
+program test_for_downto;
+var i;
+
+begin
+    for i := 3 downto 1 do
+        write(i)
+end.

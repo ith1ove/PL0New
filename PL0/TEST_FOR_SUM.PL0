@@ -1,0 +1,9 @@
+program test_for_sum;
+var i, sum;
+
+begin
+    sum := 0;
+    for i := 1 to 3 do
+        sum := sum + i;
+    write(sum)
+end.

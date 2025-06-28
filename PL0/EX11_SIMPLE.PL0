@@ -1,0 +1,16 @@
+program simple_for_test;
+var i, sum;
+
+begin
+    // 简单的FOR TO测试
+    sum := 0;
+    for i := 1 to 3 do
+        sum := sum + i;
+    write(sum);  // 期望输出: 6
+    
+    // 简单的FOR DOWNTO测试  
+    sum := 0;
+    for i := 3 downto 1 do
+        sum := sum + i;
+    write(sum)   // 期望输出: 6
+end.

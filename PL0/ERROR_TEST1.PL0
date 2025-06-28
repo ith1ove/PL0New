@@ -1,0 +1,9 @@
+PROGRAM ERROR_TEST;
+VAR A, B;
+BEGIN
+    A := 5;
+    
+    // 测试单独的 ! 符号（应该报错）
+    !;
+    
+END.

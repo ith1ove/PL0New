@@ -1,0 +1,121 @@
+=== COMPILE PL0 ===
+  0 PROGRAM EX01;// 单行注释 
+  0 /* 多行注释测试 
+  0    跨行验证 */ 
+  0 VAR A,B,C; 
+  1  
+  1 BEGIN 
+  2   A:=88; 
+  4   READ(B); 
+  6   C:=A+B*(3+B);/* 有效注释 */ 
+ 14   WRITE(C); 
+ 17   FOR; 
+ 17   TO; 
+ 17   DOWNTO; 
+ 17   STEP; 
+ 17   UNTIL; 
+ 17   RETURN; 
+ 17   DO; 
+ 17   
+ 17   ++; 
+ 17   --; 
+ 17    
+ 17   // 测试新的不等号 != （成功！正确识别为NEQ） 
+ 17   IF A != B THEN 
+ 20     WRITE(999); 
+ 24    
+ 24   // 测试其他比较运算符仍然工作 
+ 24   IF A = B THEN 
+ 27     WRITE(777); 
+ 31    
+ 31   IF A < B THEN   
+ 34     WRITE(666); 
+ 38      
+ 38   IF A > B THEN 
+ 41     WRITE(555); 
+ 45      
+ 45   IF A <= B THEN 
+ 48     WRITE(444); 
+ 52      
+ 52   IF A >= B THEN 
+ 55     WRITE(333); 
+ 59    
+ 59   // 注意：以下是错误用例（已注释掉） 
+ 59   // 原来的 <> 不等号现在不支持 
+ 59   // IF A <> B THEN WRITE(888); 
+ 59    
+ 59   // 单独的 ! 符号现在是非法的 
+ 59   // !; 
+ 59    
+ 59   // # 符号现在是非法字符   
+ 59   // #; 
+ 59    
+ 59 END. 
+  0 JMP 0 1
+  1 INI 0 6
+  2 LIT 0 88
+  3 STO 0 3
+  4 OPR 0 16
+  5 STO 0 4
+  6 LOD 0 3
+  7 LOD 0 4
+  8 LIT 0 3
+  9 LOD 0 4
+ 10 OPR 0 2
+ 11 OPR 0 4
+ 12 OPR 0 2
+ 13 STO 0 5
+ 14 LOD 0 5
+ 15 OPR 0 14
+ 16 OPR 0 15
+ 17 LOD 0 3
+ 18 LOD 0 4
+ 19 OPR 0 9
+ 20 JPC 0 24
+ 21 LIT 0 999
+ 22 OPR 0 14
+ 23 OPR 0 15
+ 24 LOD 0 3
+ 25 LOD 0 4
+ 26 OPR 0 8
+ 27 JPC 0 31
+ 28 LIT 0 777
+ 29 OPR 0 14
+ 30 OPR 0 15
+ 31 LOD 0 3
+ 32 LOD 0 4
+ 33 OPR 0 10
+ 34 JPC 0 38
+ 35 LIT 0 666
+ 36 OPR 0 14
+ 37 OPR 0 15
+ 38 LOD 0 3
+ 39 LOD 0 4
+ 40 OPR 0 12
+ 41 JPC 0 45
+ 42 LIT 0 555
+ 43 OPR 0 14
+ 44 OPR 0 15
+ 45 LOD 0 3
+ 46 LOD 0 4
+ 47 OPR 0 13
+ 48 JPC 0 52
+ 49 LIT 0 444
+ 50 OPR 0 14
+ 51 OPR 0 15
+ 52 LOD 0 3
+ 53 LOD 0 4
+ 54 OPR 0 11
+ 55 JPC 0 59
+ 56 LIT 0 333
+ 57 OPR 0 14
+ 58 OPR 0 15
+ 59 OPR 0 0
+~~~ RUN PL0 ~~~
+? 0
+88
+999
+555
+333
+~~~ END PL0 ~~~
+

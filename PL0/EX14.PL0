@@ -1,0 +1,7 @@
+PROGRAM EX14;
+CHAR c;
+BEGIN
+    WRITEC('H');
+    READC(c);
+    WRITEC(c)
+END.

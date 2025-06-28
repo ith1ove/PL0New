@@ -1,0 +1,43 @@
+PROGRAM EX09_CLEAN;
+VAR a, b, c, result;
+BEGIN
+    a := 10;
+    WRITE(a);
+    
+    a += 5;
+    WRITE(a);
+    
+    a += 10;
+    WRITE(a);
+    
+    b := 30;
+    WRITE(b);
+    
+    b -= 8;
+    WRITE(b);
+    
+    b -= 12;
+    WRITE(b);
+    
+    c := 5;
+    c += a + b;
+    WRITE(c);
+    
+    c -= a - b;
+    WRITE(c);
+    
+    result := 100;
+    result += 50;
+    result -= 30;
+    result += 20;
+    result -= 40;
+    WRITE(result);
+    
+    a := 1;
+    b := 2;
+    a += b * 3;
+    WRITE(a);
+    
+    b -= a / 2;
+    WRITE(b)
+END.

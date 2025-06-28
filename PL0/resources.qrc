@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/styles">
+        <file>modern_style.qss</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <!-- 这里可以添加图标文件 -->
+        <!-- <file>icons/run.png</file> -->
+        <!-- <file>icons/clear.png</file> -->
+    </qresource>
+</RCC>

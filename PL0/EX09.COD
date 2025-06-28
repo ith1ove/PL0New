@@ -1,0 +1,14 @@
+=== COMPILE PL0 ===
+  0 PROGRAM EX09; 
+  0 VAR x; 
+  1 BEGIN 
+  2     x := 5; 
+  4     WRITE(x); 
+  7     x += 3; 
+ 11     WRITE(x) 
+ 13 END. 
+~~~ RUN PL0 ~~~
+5
+8
+~~~ END PL0 ~~~
+

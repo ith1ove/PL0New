@@ -1,0 +1,12 @@
+PROGRAM testoperators;
+BEGIN
+    a += 5;
+    b -= 3;
+    c++;
+    d--;
+    e *= 2;
+    f /= 4;
+    g & h;
+    i || j;
+    !k
+END.

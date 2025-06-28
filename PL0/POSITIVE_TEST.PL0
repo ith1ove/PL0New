@@ -1,0 +1,19 @@
+PROGRAM POSITIVE_TEST;
+VAR A, B;
+BEGIN
+    A := 5;
+    B := 3;
+    
+    // 测试新的不等号 != （应该正确识别）
+    IF A != B THEN
+        WRITE(1);
+    
+    // 测试其他运算符
+    A += 2;
+    B -= 1;
+    A++;
+    B--;
+    
+    WRITE(A);
+    WRITE(B)
+END.

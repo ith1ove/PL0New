@@ -1,0 +1,25 @@
+=== COMPILE PL0 ===
+  0 PROGRAM EX14; 
+  0 CHAR c; 
+  1 BEGIN 
+  2     WRITEC('H'); 
+  5     READC(c); 
+  7     WRITEC(c) 
+  9 END. 
+  0 JMP 0 1
+  1 INI 0 4
+  2 LIT 0 72
+  3 OPR 0 20
+  4 OPR 0 15
+  5 OPR 0 21
+  6 STO 0 3
+  7 LOD 0 3
+  8 OPR 0 20
+  9 OPR 0 15
+ 10 OPR 0 0
+~~~ RUN PL0 ~~~
+H
+? A
+A
+~~~ END PL0 ~~~
+

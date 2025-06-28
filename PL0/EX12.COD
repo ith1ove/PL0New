@@ -1,0 +1,34 @@
+=== COMPILE PL0 ===
+  0 program EX12; 
+  0 var i; 
+  1 begin 
+  2     for i := 5 downto 1 do 
+  6         write(i) 
+ 12 end. 
+  0 JMP 0 1
+  1 INI 0 4
+  2 LIT 0 5
+  3 STO 0 3
+  4 LIT 0 1
+  5 STO 0 999
+  6 LOD 0 3
+  7 LOD 0 999
+  8 OPR 0 11
+  9 JPC 0 18
+ 10 LOD 0 3
+ 11 OPR 0 14
+ 12 OPR 0 15
+ 13 LOD 0 3
+ 14 LIT 0 1
+ 15 OPR 0 3
+ 16 STO 0 3
+ 17 JMP 0 6
+ 18 OPR 0 0
+~~~ RUN PL0 ~~~
+5
+4
+3
+2
+1
+~~~ END PL0 ~~~
+

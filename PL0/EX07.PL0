@@ -1,0 +1,87 @@
+PROGRAM EX07;
+// 测试条件语句的ELSE子句
+// 验证ELSE子句的语法和语义实现
+// 包括：
+// 1. 基本的IF-THEN-ELSE结构
+// 2. 嵌套的IF-ELSE结构
+// 3. 多种条件判断与ELSE的组合
+
+VAR A, B, C, D, RESULT;
+
+BEGIN
+    A := 10;
+    B := 20;
+    C := 10;
+    D := 0;
+    
+    WRITE(100); // 标记开始
+    
+    // 测试1：基本的IF-THEN-ELSE结构
+    IF A < B THEN
+        WRITE(1)    // A < B 为真，应该输出1
+    ELSE
+        WRITE(0);   // 不应该执行
+    
+    // 测试2：ELSE分支执行
+    IF A > B THEN
+        WRITE(0)    // A > B 为假，不应该执行
+    ELSE
+        WRITE(2);   // 应该输出2
+    
+    // 测试3：等值判断的ELSE
+    IF A = C THEN
+        WRITE(3)    // A = C 为真，应该输出3
+    ELSE
+        WRITE(0);   // 不应该执行
+    
+    // 测试4：不等值判断的ELSE
+    IF A != B THEN
+        WRITE(4)    // A != B 为真，应该输出4
+    ELSE
+        WRITE(0);   // 不应该执行
+    
+    // 测试5：嵌套的IF-ELSE结构
+    IF A >= C THEN BEGIN
+        IF B > A THEN
+            WRITE(5)    // 嵌套条件为真，应该输出5
+        ELSE
+            WRITE(0);   // 不应该执行
+        WRITE(6)        // 外层条件为真，应该输出6
+    END
+    ELSE
+        WRITE(0);       // 不应该执行
+    
+    // 测试6：复杂的嵌套ELSE
+    IF D = 0 THEN BEGIN
+        IF A < B THEN
+            RESULT := 7
+        ELSE
+            RESULT := 8;
+        WRITE(RESULT)   // 应该输出7
+    END
+    ELSE BEGIN
+        IF A > B THEN
+            RESULT := 9
+        ELSE
+            RESULT := 10;
+        WRITE(RESULT)   // 不应该执行
+    END;
+    
+    // 测试7：多个独立的IF-ELSE
+    IF A <= C THEN
+        WRITE(8)        // A <= C 为真，应该输出8
+    ELSE
+        WRITE(0);
+    
+    IF B >= A THEN
+        WRITE(9)        // B >= A 为真，应该输出9
+    ELSE
+        WRITE(0);
+    
+    // 输出变量值验证
+    WRITE(A);   // 10
+    WRITE(B);   // 20
+    WRITE(C);   // 10
+    
+    WRITE(999)  // 标记结束
+END.

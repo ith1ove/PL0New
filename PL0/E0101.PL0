@@ -1,0 +1,19 @@
+PROGRAM TestNewSymbols;
+VAR x, y, z;
+BEGIN
+    x := 10;
+    y := 5;
+    z := 1;
+    
+    WRITE(x);
+    WRITE(y);
+    WRITE(z);
+    
+    FOR;
+    STEP;
+    UNTIL;
+    RETURN;
+    DO;
+    
+    
+END.

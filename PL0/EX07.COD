@@ -1,0 +1,248 @@
+=== COMPILE PL0 ===
+  0 PROGRAM EX07; 
+  0 // 测试条件语句的ELSE子句 
+  0 // 验证ELSE子句的语法和语义实现 
+  0 // 包括： 
+  0 // 1. 基本的IF-THEN-ELSE结构 
+  0 // 2. 嵌套的IF-ELSE结构 
+  0 // 3. 多种条件判断与ELSE的组合 
+  0  
+  0 VAR A, B, C, D, RESULT; 
+  1  
+  1 BEGIN 
+  2     A := 10; 
+  4     B := 20; 
+  6     C := 10; 
+  8     D := 0; 
+ 10      
+ 10     WRITE(100); // 标记开始 
+ 13      
+ 13     // 测试1：基本的IF-THEN-ELSE结构 
+ 13     IF A < B THEN 
+ 16         WRITE(1)    // A < B 为真，应该输出1 
+ 19     ELSE 
+ 20         WRITE(0);   // 不应该执行 
+ 24      
+ 24     // 测试2：ELSE分支执行 
+ 24     IF A > B THEN 
+ 27         WRITE(0)    // A > B 为假，不应该执行 
+ 30     ELSE 
+ 31         WRITE(2);   // 应该输出2 
+ 35      
+ 35     // 测试3：等值判断的ELSE 
+ 35     IF A = C THEN 
+ 38         WRITE(3)    // A = C 为真，应该输出3 
+ 41     ELSE 
+ 42         WRITE(0);   // 不应该执行 
+ 46      
+ 46     // 测试4：不等值判断的ELSE 
+ 46     IF A != B THEN 
+ 49         WRITE(4)    // A != B 为真，应该输出4 
+ 52     ELSE 
+ 53         WRITE(0);   // 不应该执行 
+ 57      
+ 57     // 测试5：嵌套的IF-ELSE结构 
+ 57     IF A >= C THEN BEGIN 
+ 61         IF B > A THEN 
+ 64             WRITE(5)    // 嵌套条件为真，应该输出5 
+ 67         ELSE 
+ 68             WRITE(0);   // 不应该执行 
+ 72         WRITE(6)        // 外层条件为真，应该输出6 
+ 74     END 
+ 75     ELSE 
+ 75         WRITE(0);       // 不应该执行 
+ 79      
+ 79     // 测试6：复杂的嵌套ELSE 
+ 79     IF D = 0 THEN BEGIN 
+ 83         IF A < B THEN 
+ 86             RESULT := 7 
+ 88         ELSE 
+ 89             RESULT := 8; 
+ 92         WRITE(RESULT)   // 应该输出7 
+ 94     END 
+ 95     ELSE BEGIN 
+ 96         IF A > B THEN 
+ 99             RESULT := 9 
+101         ELSE 
+102             RESULT := 10; 
+105         WRITE(RESULT)   // 不应该执行 
+107     END; 
+108      
+108     // 测试7：多个独立的IF-ELSE 
+108     IF A <= C THEN 
+111         WRITE(8)        // A <= C 为真，应该输出8 
+114     ELSE 
+115         WRITE(0); 
+119      
+119     IF B >= A THEN 
+122         WRITE(9)        // B >= A 为真，应该输出9 
+125     ELSE 
+126         WRITE(0); 
+130      
+130     // 输出变量值验证 
+130     WRITE(A);   // 10 
+133     WRITE(B);   // 20 
+136     WRITE(C);   // 10 
+139      
+139     WRITE(999)  // 标记结束 
+141 END. 
+  0 JMP 0 1
+  1 INI 0 8
+  2 LIT 0 10
+  3 STO 0 3
+  4 LIT 0 20
+  5 STO 0 4
+  6 LIT 0 10
+  7 STO 0 5
+  8 LIT 0 0
+  9 STO 0 6
+ 10 LIT 0 100
+ 11 OPR 0 14
+ 12 OPR 0 15
+ 13 LOD 0 3
+ 14 LOD 0 4
+ 15 OPR 0 10
+ 16 JPC 0 21
+ 17 LIT 0 1
+ 18 OPR 0 14
+ 19 OPR 0 15
+ 20 JMP 0 24
+ 21 LIT 0 0
+ 22 OPR 0 14
+ 23 OPR 0 15
+ 24 LOD 0 3
+ 25 LOD 0 4
+ 26 OPR 0 12
+ 27 JPC 0 32
+ 28 LIT 0 0
+ 29 OPR 0 14
+ 30 OPR 0 15
+ 31 JMP 0 35
+ 32 LIT 0 2
+ 33 OPR 0 14
+ 34 OPR 0 15
+ 35 LOD 0 3
+ 36 LOD 0 5
+ 37 OPR 0 8
+ 38 JPC 0 43
+ 39 LIT 0 3
+ 40 OPR 0 14
+ 41 OPR 0 15
+ 42 JMP 0 46
+ 43 LIT 0 0
+ 44 OPR 0 14
+ 45 OPR 0 15
+ 46 LOD 0 3
+ 47 LOD 0 4
+ 48 OPR 0 9
+ 49 JPC 0 54
+ 50 LIT 0 4
+ 51 OPR 0 14
+ 52 OPR 0 15
+ 53 JMP 0 57
+ 54 LIT 0 0
+ 55 OPR 0 14
+ 56 OPR 0 15
+ 57 LOD 0 3
+ 58 LOD 0 5
+ 59 OPR 0 11
+ 60 JPC 0 76
+ 61 LOD 0 4
+ 62 LOD 0 3
+ 63 OPR 0 12
+ 64 JPC 0 69
+ 65 LIT 0 5
+ 66 OPR 0 14
+ 67 OPR 0 15
+ 68 JMP 0 72
+ 69 LIT 0 0
+ 70 OPR 0 14
+ 71 OPR 0 15
+ 72 LIT 0 6
+ 73 OPR 0 14
+ 74 OPR 0 15
+ 75 JMP 0 79
+ 76 LIT 0 0
+ 77 OPR 0 14
+ 78 OPR 0 15
+ 79 LOD 0 6
+ 80 LIT 0 0
+ 81 OPR 0 8
+ 82 JPC 0 96
+ 83 LOD 0 3
+ 84 LOD 0 4
+ 85 OPR 0 10
+ 86 JPC 0 90
+ 87 LIT 0 7
+ 88 STO 0 7
+ 89 JMP 0 92
+ 90 LIT 0 8
+ 91 STO 0 7
+ 92 LOD 0 7
+ 93 OPR 0 14
+ 94 OPR 0 15
+ 95 JMP 0 108
+ 96 LOD 0 3
+ 97 LOD 0 4
+ 98 OPR 0 12
+ 99 JPC 0 103
+100 LIT 0 9
+101 STO 0 7
+102 JMP 0 105
+103 LIT 0 10
+104 STO 0 7
+105 LOD 0 7
+106 OPR 0 14
+107 OPR 0 15
+108 LOD 0 3
+109 LOD 0 5
+110 OPR 0 13
+111 JPC 0 116
+112 LIT 0 8
+113 OPR 0 14
+114 OPR 0 15
+115 JMP 0 119
+116 LIT 0 0
+117 OPR 0 14
+118 OPR 0 15
+119 LOD 0 4
+120 LOD 0 3
+121 OPR 0 11
+122 JPC 0 127
+123 LIT 0 9
+124 OPR 0 14
+125 OPR 0 15
+126 JMP 0 130
+127 LIT 0 0
+128 OPR 0 14
+129 OPR 0 15
+130 LOD 0 3
+131 OPR 0 14
+132 OPR 0 15
+133 LOD 0 4
+134 OPR 0 14
+135 OPR 0 15
+136 LOD 0 5
+137 OPR 0 14
+138 OPR 0 15
+139 LIT 0 999
+140 OPR 0 14
+141 OPR 0 15
+142 OPR 0 0
+~~~ RUN PL0 ~~~
+100
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+20
+10
+999
+~~~ END PL0 ~~~
+

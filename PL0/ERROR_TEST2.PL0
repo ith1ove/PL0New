@@ -1,0 +1,9 @@
+PROGRAM ERROR_TEST2;
+VAR A, B;
+BEGIN
+    A := 5;
+    
+    // 测试 # 符号（应该报错，因为现在是非法字符）
+    #;
+    
+END.

@@ -1,0 +1,11 @@
+program minimal_test;
+var i;
+
+begin
+    i := 1;
+    write(i);
+    i := 2;
+    write(i);
+    i := 3;
+    write(i)
+end.

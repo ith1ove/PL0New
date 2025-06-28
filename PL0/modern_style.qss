@@ -1,0 +1,174 @@
+/* Modern Style for PL0 Compiler */
+
+/* 全局样式 */
+QMainWindow {
+    background-color: #f5f5f5;
+    color: #333333;
+}
+
+/* 文本编辑区域 - 类似代码编辑器 */
+QTextEdit {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    border: 1px solid #3c3c3c;
+    border-radius: 8px;
+    padding: 12px;
+    font-family: "Consolas", "Monaco", "Courier New", monospace;
+    font-size: 14px;
+    selection-background-color: #264f78;
+}
+
+/* 输入框 */
+QLineEdit {
+    background-color: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #333333;
+}
+
+QLineEdit:focus {
+    border-color: #2196F3;
+    background-color: #fafafa;
+}
+
+/* 按钮 - Material Design风格 */
+QPushButton {
+    background-color: #21f391;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+QPushButton:hover {
+    background-color: #1abc70;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+QPushButton:pressed {
+    background-color: #1565C0;
+}
+
+QPushButton#clearButton {
+    background-color: #FF5722;
+}
+
+QPushButton#clearButton:hover {
+    background-color: #E64A19;
+}
+
+/* 分组框 - 卡片式设计 */
+QGroupBox {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding-top: 15px;
+    font-weight: bold;
+    color: #424242;
+}
+
+QGroupBox::title {
+    left: 15px;
+    padding: 0 8px 0 8px;
+    background-color: #ffffff;
+    color: #2196F3;
+}
+
+/* Tab样式的按钮 - 垂直排列且文字水平 */
+QPushButton[objectName="tabButton"] {
+    background-color: #e0e0e0;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin: 2px 0px;
+    color: #424242;
+    font-weight: 500;
+    text-align: center;
+}
+
+QPushButton[objectName="tabButton"]:checked {
+    background-color: #2196F3;
+    color: white;
+    border-color: #1976D2;
+}
+
+QPushButton[objectName="tabButton"]:hover {
+    background-color: #f0f0f0;
+    border-color: #9e9e9e;
+}
+
+QPushButton[objectName="tabButton"]:checked:hover {
+    background-color: #1976D2;
+}
+
+/* 单选按钮 - 保留作为备用 */
+QRadioButton {
+    color: #424242;
+    font-size: 10px;
+    margin: 4px;
+}
+
+QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+}
+
+QRadioButton::indicator:unchecked {
+    border: 2px solid #BDBDBD;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+QRadioButton::indicator:checked {
+    border: 2px solid #2196F3;
+    border-radius: 8px;
+    background-color: #2196F3;
+}
+
+QRadioButton::indicator:checked::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: #ffffff;
+    margin: 3px;
+}
+
+/* 标签 */
+QLabel {
+    color: #424242;
+    font-weight: 500;
+}
+
+/* 滚动条 */
+QScrollBar:vertical {
+    background-color: #f0f0f0;
+    width: 12px;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:vertical {
+    background-color: #c0c0c0;
+    border-radius: 6px;
+    min-height: 20px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background-color: #a0a0a0;
+}
+
+/* 工具提示 */
+QToolTip {
+    background-color: #424242;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px;
+    font-size: 10px;
+}

@@ -1,0 +1,28 @@
+PROGRAM EX02;
+// 测试新增保留字：ELSE，FOR，TO，DOWNTO，RETURN
+// 这个测试程序验证编译器能否正确识别新增的保留字
+
+VAR X, Y, Z;
+
+BEGIN
+    // 测试 ELSE 保留字（在 IF 语句中）
+    X := 10;
+    IF X > 5 THEN
+        Y := 1
+    ELSE
+        Y := 0;
+    
+    // 测试 FOR 保留字（当前只是占位符实现）
+    FOR;
+    
+    // 测试 TO 保留字
+    TO;
+    
+    // 测试 DOWNTO 保留字
+    DOWNTO;
+    
+    // 测试 RETURN 保留字
+    RETURN;
+    
+    WRITE(Y)
+END.

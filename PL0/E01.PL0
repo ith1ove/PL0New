@@ -1,0 +1,52 @@
+PROGRAM EX01;// 单行注释
+/* 多行注释测试
+   跨行验证 */
+VAR A,B,C;
+
+BEGIN
+  A:=88;
+  READ(B);
+  C:=A+B*(3+B);/* 有效注释 */
+  WRITE(C);
+  FOR;
+  TO;
+  DOWNTO;
+  STEP;
+  UNTIL;
+  RETURN;
+  DO;
+ 
+  ++;
+  --;
+  
+  // 测试新的不等号 != （成功！正确识别为NEQ）
+  IF A != B THEN
+    WRITE(999);
+  
+  // 测试其他比较运算符仍然工作
+  IF A = B THEN
+    WRITE(777);
+  
+  IF A < B THEN  
+    WRITE(666);
+    
+  IF A > B THEN
+    WRITE(555);
+    
+  IF A <= B THEN
+    WRITE(444);
+    
+  IF A >= B THEN
+    WRITE(333);
+  
+  // 注意：以下是错误用例（已注释掉）
+  // 原来的 <> 不等号现在不支持
+  // IF A <> B THEN WRITE(888);
+  
+  // 单独的 ! 符号现在是非法的
+  // !;
+  
+  // # 符号现在是非法字符  
+  // #;
+  
+END.
