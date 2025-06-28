@@ -1,0 +1,95 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Quick Build with qmake",
+            "command": "${workspaceFolder}/build_qt.bat",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "type": "shell",
+            "label": "Run MOC (Meta-Object Compiler)",
+            "command": "H:/Qt/6.9.1/mingw_64/bin/moc.exe",
+            "args": [
+                "${workspaceFolder}/mainwindow.h",
+                "-o",
+                "${workspaceFolder}/moc_mainwindow.cpp"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Build with qmake",
+            "command": "H:/Qt/6.9.1/mingw_64/bin/qmake.exe",
+            "args": [
+                "${workspaceFolder}/PL0.pro"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Make project",
+            "command": "H:/Qt/Tools/mingw1310_64/bin/mingw32-make.exe",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "dependsOn": "Build with qmake"
+        },
+        {
+            "type": "shell",
+            "label": "Run in Test Directory",
+            "command": "powershell",
+            "args": [
+                "-Command",
+                "$env:PATH = 'H:/Qt/6.9.1/mingw_64/bin;H:/Qt/Tools/mingw1310_64/bin;' + $env:PATH; cd test; ../release/PL0.exe"
+            ],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Build and Run in Test",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Make project",
+                "Run in Test Directory"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}

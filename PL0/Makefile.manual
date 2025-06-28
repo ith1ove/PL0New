@@ -1,0 +1,42 @@
+# Qt项目的简单Makefile
+# 使用这个文件可以直接编译Qt项目
+
+CXX = H:/Qt/Tools/mingw1310_64/bin/g++.exe
+MOC = H:/Qt/6.9.1/mingw_64/bin/moc.exe
+RCC = H:/Qt/6.9.1/mingw_64/bin/rcc.exe
+
+QTDIR = H:/Qt/6.9.1/mingw_64
+QTINC = $(QTDIR)/include
+QTLIB = $(QTDIR)/lib
+
+CXXFLAGS = -std=c++17 -I$(QTINC) -I$(QTINC)/QtCore -I$(QTINC)/QtGui -I$(QTINC)/QtWidgets
+CXXFLAGS += -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+
+LDFLAGS = -L$(QTLIB) -lQt6Core -lQt6Gui -lQt6Widgets
+
+SOURCES = main.cpp mainwindow.cpp PL0.cpp
+HEADERS = mainwindow.h
+MOC_SOURCES = moc_mainwindow.cpp
+RCC_SOURCES = qrc_resources.cpp
+
+OBJECTS = $(SOURCES:.cpp=.o) $(MOC_SOURCES:.cpp=.o) $(RCC_SOURCES:.cpp=.o)
+TARGET = PL0.exe
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(CXX) -o $@ $^ $(LDFLAGS)
+
+moc_%.cpp: %.h
+	$(MOC) $< -o $@
+
+qrc_%.cpp: %.qrc
+	$(RCC) $< -o $@
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+clean:
+	del /Q *.o moc_*.cpp qrc_*.cpp $(TARGET)
+
+.PHONY: all clean

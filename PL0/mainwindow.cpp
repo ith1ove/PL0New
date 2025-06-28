@@ -17,6 +17,8 @@
 #include <QApplication>
 #include <QTabBar>
 #include <QButtonGroup>
+#include <QStandardPaths>
+#include <QCoreApplication>
 
 MainWindow::MainWindow(QWidget *parent):QMainWindow(parent){
     setWindowTitle(tr("广东工业大学 PL0编译器"));   //设置标题
@@ -311,4 +313,59 @@ void MainWindow::applyBuiltinStyle() {
     )";
     
     qApp->setStyleSheet(style);
+}
+
+// 添加自动查找test目录的函数
+QString MainWindow::findTestDirectory() {
+    // 获取当前工作目录
+    QString currentPath = QDir::currentPath();
+    QDir currentDir(currentPath);
+    
+    // 首先检查当前目录下是否有test文件夹
+    if (currentDir.exists("test")) {
+        return currentDir.absoluteFilePath("test");
+    }
+    
+    // 检查上级目录
+    if (currentDir.cdUp()) {
+        if (currentDir.exists("test")) {
+            return currentDir.absoluteFilePath("test");
+        }
+    }
+    
+    // 检查应用程序所在目录
+    QString appPath = QCoreApplication::applicationDirPath();
+    QDir appDir(appPath);
+    if (appDir.exists("test")) {
+        return appDir.absoluteFilePath("test");
+    }
+    
+    // 检查应用程序上级目录
+    if (appDir.cdUp()) {
+        if (appDir.exists("test")) {
+            return appDir.absoluteFilePath("test");
+        }
+    }
+    
+    // 如果都没找到，返回当前目录（保持原有行为）
+    return currentPath;
+}
+
+QString MainWindow::findPL0File(const QString& filename) {
+    // 首先尝试当前目录
+    QString currentPath = QDir::currentPath();
+    QString pl0File = currentPath + "/" + filename + ".PL0";
+    if (QFile::exists(pl0File)) {
+        return pl0File;
+    }
+    
+    // 尝试test目录
+    QString testDir = findTestDirectory();
+    pl0File = testDir + "/" + filename + ".PL0";
+    if (QFile::exists(pl0File)) {
+        return pl0File;
+    }
+    
+    // 如果都没找到，返回原始路径（让程序正常报错）
+    return filename + ".PL0";
 }

@@ -53,6 +53,10 @@ public:
     void Block(int LEV, int TX, SYMSET FSYS);
     int BASE(int L,int B,int S[]);
     void Interpret();
+    
+    // 新增：自动查找test目录和PL0文件的函数
+    QString findTestDirectory();
+    QString findPL0File(const QString& filename);
 
 private:
     void createPL0Page();   // 定义创建 PL0编译器 页面函数

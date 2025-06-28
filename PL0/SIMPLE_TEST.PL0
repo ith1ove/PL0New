@@ -1,0 +1,6 @@
+program test;
+var a;
+begin
+  a := 5;
+  write(a)
+end.

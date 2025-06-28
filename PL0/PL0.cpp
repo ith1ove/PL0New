@@ -8,6 +8,9 @@
 #include <QTabBar>
 #include <QButtonGroup>
 #include <cctype>
+#include <QFile>
+#include <QFileInfo>
+#include <QDir>
 
 using namespace std;
 
@@ -1448,8 +1451,20 @@ void MainWindow::runClicked(){
     FACBEGSYS[MINUSMINUS]=1; // 支持前缀--
 
     const string filename = sourceLineEdit->text().toStdString();
-    const string pl0name = filename+".PL0";
+    // 使用新的文件查找功能
+    QString pl0FilePath = findPL0File(QString::fromStdString(filename));
+    const string pl0name = pl0FilePath.toStdString();
     const string codname = filename+".COD";
+    
+    // 如果找到文件，设置工作目录为文件所在目录
+    if (QFile::exists(pl0FilePath)) {
+        QFileInfo fileInfo(pl0FilePath);
+        QString fileDir = fileInfo.absolutePath();
+        QDir::setCurrent(fileDir);
+        printfs(("=== 找到文件: " + pl0name).c_str());
+        printfs(("=== 工作目录: " + fileDir.toStdString()).c_str());
+    }
+    
     if ((FIN=fopen(pl0name.c_str(),"r"))!=0) {
         FOUT=fopen(codname.c_str(),"w");
         //Form1->printfs("=== COMPILE PL0 ===");

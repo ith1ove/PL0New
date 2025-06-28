@@ -2,16 +2,49 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug PL0 Application",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/release/PL0.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "PATH",
+          "value": "H:/Qt/6.9.1/mingw_64/bin;H:/Qt/Tools/mingw1310_64/bin;${env:PATH}"
+        }
+      ],
+      "externalConsole": true,
+      "MIMode": "gdb",
+      "miDebuggerPath": "H:/Qt/Tools/mingw1310_64/bin/gdb.exe",
+      "preLaunchTask": "Make project",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    {
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/ith1ove/Desktop/PL0",
-      "program": "c:/Users/ith1ove/Desktop/PL0/build/Debug/outDebug",
+      "cwd": "${workspaceFolder}/test",
+      "environment": [
+        {
+          "name": "PATH",
+          "value": "H:/Qt/6.9.1/mingw_64/bin;H:/Qt/Tools/mingw1310_64/bin;${env:PATH}"
+        }
+      ],
+      "program": "${workspaceFolder}/release/PL0.exe",
+      "preLaunchTask": "Make project",
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
+      "miDebuggerPath": "H:/Qt/Tools/mingw1310_64/bin/gdb.exe",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",

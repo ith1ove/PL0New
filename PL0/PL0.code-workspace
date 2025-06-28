@@ -1,0 +1,28 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "C_Cpp.default.compilerPath": "H:/Qt/Tools/mingw1310_64/bin/g++.exe",
+        "C_Cpp.default.includePath": [
+            "${workspaceFolder}/**",
+            "H:/Qt/6.9.1/mingw_64/include/**"
+        ],
+        "terminal.integrated.env.windows": {
+            "PATH": "H:/Qt/6.9.1/mingw_64/bin;H:/Qt/Tools/mingw1310_64/bin;${env:PATH}",
+            "QTDIR": "H:/Qt/6.9.1/mingw_64"
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "theqtcompany.qt",
+            "theqtcompany.qt-cpp",
+            "bbenoist.qml",
+            "vector-wlc.qtconfigure",
+            "ms-vscode.cpptools",
+            "ms-vscode.cmake-tools"
+        ]
+    }
+}
