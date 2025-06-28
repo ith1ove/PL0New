@@ -1,0 +1,23 @@
+program simple_real_test;
+const 
+    half = 0.5;
+real 
+    x, y, sum, product;
+
+begin
+    write("简单实数测试");
+    write("请输入第一个实数: ");
+    readreal(x);
+    write("请输入第二个实数: ");
+    readreal(y);
+    
+    sum := x + y;
+    product := x * y;
+    
+    write("两数之和: ");
+    writereal(sum);
+    write("两数之积: ");
+    writereal(product);
+    write("常量测试: ");
+    writereal(half)
+end.

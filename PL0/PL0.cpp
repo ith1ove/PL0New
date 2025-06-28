@@ -13,14 +13,14 @@ using namespace std;
 
 //---------------------------------------------------------------------------
 const  int AL    =  10;  /* LENGTH OF IDENTIFIERS */
-const  int NORW  =  24;  /* # OF RESERVED WORDS */  // 关键字个数（新增char, readc, writec）
+const  int NORW  =  27;  /* # OF RESERVED WORDS */  // 关键字个数（新增char, readc, writec, real, writereal, readreal）
 const  int TXMAX = 100;  /* LENGTH OF IDENTIFIER TABLE */
 const  int NMAX  =  14;  /* MAX NUMBER OF DEGITS IN NUMBERS */
 const  int AMAX  =2047;  /* MAXIMUM ADDRESS */
 const  int LEVMAX=   3;  /* MAX DEPTH OF BLOCK NESTING */
 const  int CXMAX = 200;  /* SIZE OF CODE ARRAY */
 
-const int SYMNUM = 57;  // SYM个数（新增字符类型支持和字符输出）
+const int SYMNUM = 63;  // SYM个数（新增实数类型支持）
 
 typedef enum  { NUL, IDENT, NUMBER, PLUS, MINUS, TIMES,
                SLASH, ODDSYM, EQL, NEQ, LSS, LEQ, GTR, GEQ,
@@ -35,7 +35,9 @@ typedef enum  { NUL, IDENT, NUMBER, PLUS, MINUS, TIMES,
                TOSYM, DOWNTOSYM,  
                PLUSBECOMES, MINUSBECOMES, PLUSPLUS, MINUSMINUS,    // 新增4个。+=，-=，++，--
                CHARSYM, CHARACTER,    // 新增字符类型支持：'char'关键字和字符常量
-               WRITECSYM, READCSYM    // 新增字符读写函数
+               WRITECSYM, READCSYM,   // 新增字符读写函数
+               REALSYM, REALNUMBER,   // 新增实数类型支持：'real'关键字和实数常量
+               WRITEREALNUM, READREALNUM  // 新增实数读写函数
                // ↑↑↑ 新增部分 ↑↑↑
 } SYMBOL;
 char *SYMOUT[] = {"NUL", "IDENT", "NUMBER", "PLUS", "MINUS", "TIMES",
@@ -51,7 +53,9 @@ char *SYMOUT[] = {"NUL", "IDENT", "NUMBER", "PLUS", "MINUS", "TIMES",
     "TOSYM", "DOWNTOSYM",  // 新增2个。TO，DOWNTO
     "PLUSBECOMES", "MINUSBECOMES", "PLUSPLUS", "MINUSMINUS",    // 新增4个。+=，-=，++，--
     "CHARSYM", "CHARACTER",    // 新增字符类型支持
-    "WRITECSYM", "READCSYM"    // 新增字符读写函数
+    "WRITECSYM", "READCSYM",   // 新增字符读写函数
+    "REALSYM", "REALNUMBER",   // 新增实数类型支持
+    "WRITEREALNUM", "READREALNUM"  // 新增实数读写函数
     // ↑↑↑ 新增部分 ↑↑↑
 };
 //typedef  int *SYMSET; // SET OF SYMBOL;
@@ -75,6 +79,7 @@ char   CH;  /*LAST CHAR READ*/
 SYMBOL SYM; /*LAST SYMBOL READ*/
 ALFA   ID;  /*LAST IDENTIFIER READ*/
 int    NUM; /*LAST NUMBER READ*/
+double REALNUM; /*LAST REAL NUMBER READ*/  // 新增：存储实数值
 char   CHARVAL; /*LAST CHARACTER VALUE READ*/  // 新增：存储字符常量值
 int    CC;  /*CHARACTER COUNT*/
 int    LL;  /*LINE LENGTH*/
@@ -92,6 +97,7 @@ struct {
     OBJECTS KIND;
     union {
         int VAL;   /*CONSTANT*/
+        double REALVAL; /*REAL CONSTANT*/  // 新增：实数常量值
         char CHARVAL; /*CHARACTER CONSTANT*/  // 新增：字符常量值
         struct { int LEVEL,ADR,SIZE; } vp;  /*VARIABLE,PROCEDUR:*/
     };
@@ -278,12 +284,32 @@ void MainWindow::GetSym() {
             SYM = IDENT;
         }
     }        else
-            if (CH>='0' && CH<='9') { /*NUMBER*/
-                K=0; NUM=0; SYM=NUMBER;
+            if (CH>='0' && CH<='9') { /*NUMBER or REAL NUMBER*/
+                K=0; NUM=0; REALNUM=0.0; SYM=NUMBER;
+                bool isReal = false;
+                
+                // 读取整数部分
                 do {
                     NUM=10*NUM+(CH-'0');
+                    REALNUM = REALNUM*10.0 + (CH-'0');
                     K++; GetCh();
                 }while(CH>='0' && CH<='9');
+                
+                // 检查是否有小数点
+                if (CH == '.') {
+                    isReal = true;
+                    SYM = REALNUMBER;
+                    GetCh();
+                    
+                    // 读取小数部分
+                    double fraction = 0.1;
+                    while (CH>='0' && CH<='9') {
+                        REALNUM += (CH-'0') * fraction;
+                        fraction /= 10.0;
+                        K++; GetCh();
+                    }
+                }
+                
                 if (K>NMAX) Error(30);
             }
             else
@@ -419,10 +445,16 @@ void MainWindow::ENTER(OBJECTS K, int LEV, int &TX, int &DX) { /*ENTER OBJECT IN
         if (NUM>AMAX) { Error(31); NUM=0; }
         TABLE[TX].VAL=NUM;
         break;
+    case REALCONST:  // 新增实数常量处理
+        TABLE[TX].REALVAL=REALNUM;
+        break;
     case CHARCONST:  // 新增字符常量处理
         TABLE[TX].CHARVAL=CHARVAL;
         break;
     case VARIABLE:
+        TABLE[TX].vp.LEVEL=LEV; TABLE[TX].vp.ADR=DX; DX++;
+        break;
+    case REALVARIABLE:  // 新增实数变量处理
         TABLE[TX].vp.LEVEL=LEV; TABLE[TX].vp.ADR=DX; DX++;
         break;
     case CHARVARIABLE:  // 新增字符变量处理
@@ -451,6 +483,10 @@ void MainWindow::ConstDeclaration(int LEV,int &TX,int &DX) {
                 ENTER(CONSTANT,LEV,TX,DX); 
                 GetSym(); 
             }
+            else if (SYM==REALNUMBER) { 
+                ENTER(REALCONST,LEV,TX,DX); 
+                GetSym(); 
+            }
             else if (SYM==CHARACTER) { 
                 ENTER(CHARCONST,LEV,TX,DX); 
                 GetSym(); 
@@ -477,6 +513,14 @@ void MainWindow::CharVarDeclaration(int LEV,int &TX,int &DX) {
     }
     else Error(4);
 } /*CharVarDeclaration()*/
+
+void MainWindow::RealVarDeclaration(int LEV,int &TX,int &DX) {
+    if (SYM==IDENT) { 
+        ENTER(REALVARIABLE,LEV,TX,DX); 
+        GetSym(); 
+    }
+    else Error(4);
+} /*RealVarDeclaration()*/
 //---------------------------------------------------------------------------
 void MainWindow::ListCode(int CX0) {  /*LIST CODE GENERATED FOR THIS Block*/
     // 使用按钮组判断：0表示"显示"，1表示"不显示"
@@ -533,10 +577,17 @@ void MainWindow::FACTOR(SYMSET FSYS, int LEV, int &TX) {
                 case CONSTANT:
                     GEN(LIT,0,TABLE[i].VAL);
                     break;
+                case REALCONST:  // 新增实数常量处理
+                    // 需要特殊的指令处理实数，暂时转换为整数处理
+                    GEN(LIT,0,(int)(TABLE[i].REALVAL * 1000)); // 放大1000倍存储
+                    break;
                 case CHARCONST:  // 新增字符常量处理
                     GEN(LIT,0,(int)TABLE[i].CHARVAL);  // 将字符转换为整数
                     break;
                 case VARIABLE:
+                    GEN(LOD,LEV-TABLE[i].vp.LEVEL,TABLE[i].vp.ADR);
+                    break;
+                case REALVARIABLE:  // 新增实数变量处理
                     GEN(LOD,LEV-TABLE[i].vp.LEVEL,TABLE[i].vp.ADR);
                     break;
                 case CHARVARIABLE:  // 新增字符变量处理
@@ -550,7 +601,7 @@ void MainWindow::FACTOR(SYMSET FSYS, int LEV, int &TX) {
             
             // 检查后缀 ++/-- 运算符
             if (SYM==PLUSPLUS || SYM==MINUSMINUS) {
-                if (TABLE[i].KIND!=VARIABLE && TABLE[i].KIND!=CHARVARIABLE) {
+                if (TABLE[i].KIND!=VARIABLE && TABLE[i].KIND!=CHARVARIABLE && TABLE[i].KIND!=REALVARIABLE) {
                     Error(12); // 不是变量
                 } else {
                     SYMBOL postOp = SYM;
@@ -573,6 +624,11 @@ void MainWindow::FACTOR(SYMSET FSYS, int LEV, int &TX) {
         else if (SYM==NUMBER) {
             if (NUM>AMAX) { Error(31); NUM=0; }
             GEN(LIT,0,NUM); GetSym();
+        }
+        else if (SYM==REALNUMBER) {  // 新增实数常量处理
+            // 将实数转换为整数处理（放大1000倍）
+            int scaledReal = (int)(REALNUM * 1000);
+            GEN(LIT,0,scaledReal); GetSym();
         }
         else if (SYM==CHARACTER) {  // 新增字符常量处理
             GEN(LIT,0,(int)CHARVAL);  // 将字符转换为整数压栈
@@ -642,7 +698,7 @@ void MainWindow::STATEMENT(SYMSET FSYS,int LEV,int &TX) {   /*STATEMENT*/
         i=POSITION(ID,TX);
         if (i==0) Error(11);
         else
-            if (TABLE[i].KIND!=VARIABLE && TABLE[i].KIND!=CHARVARIABLE) { /*ASSIGNMENT TO NON-VARIABLE*/
+            if (TABLE[i].KIND!=VARIABLE && TABLE[i].KIND!=CHARVARIABLE && TABLE[i].KIND!=REALVARIABLE) { /*ASSIGNMENT TO NON-VARIABLE*/
                 Error(12); i=0;
             }
         GetSym();
@@ -781,6 +837,40 @@ void MainWindow::STATEMENT(SYMSET FSYS,int LEV,int &TX) {   /*STATEMENT*/
         }
         else GetSym();
         break; /* READCSYM */
+    case WRITEREALNUM:  // 新增实数输出处理
+        GetSym();
+        if (SYM==LPAREN) {
+            do {
+                GetSym();
+                EXPRESSION(SymSetUnion(SymSetNew(RPAREN,COMMA),FSYS),LEV,TX);
+                GEN(OPR,0,22);  // 使用实数输出操作码
+            }while(SYM==COMMA);
+            if (SYM!=RPAREN) Error(33);
+            else GetSym();
+        }
+        GEN(OPR,0,15);
+        break; /*WRITEREALNUM*/
+    case READREALNUM:   // 新增实数输入处理
+        GetSym();
+        if (SYM!=LPAREN) Error(34);
+        else
+            do {
+                GetSym();
+                if (SYM==IDENT) i=POSITION(ID,TX);
+                else i=0;
+                if (i==0) Error(35);
+                else {
+                    GEN(OPR,0,23);  // 实数输入
+                    GEN(STO,LEV-TABLE[i].vp.LEVEL,TABLE[i].vp.ADR);
+                }
+                GetSym();
+            }while(SYM==COMMA);
+        if (SYM!=RPAREN) {
+            Error(33);
+            while (!SymIn(SYM,FSYS)) GetSym();
+        }
+        else GetSym();
+        break; /* READREALNUM */
     case CALLSYM:
         GetSym();
         if (SYM!=IDENT) Error(14);
@@ -1063,6 +1153,18 @@ void MainWindow::Block(int LEV, int TX, SYMSET FSYS) {
                 else Error(5);
             }while(SYM==CHARSYM);
         }
+        if (SYM==REALSYM) {  // 新增实数类型变量声明处理
+            do {
+                GetSym(); // 跳过REALSYM
+                RealVarDeclaration(LEV,TX,DX);  
+                while (SYM==COMMA) { 
+                    GetSym(); 
+                    RealVarDeclaration(LEV,TX,DX); 
+                }
+                if (SYM==SEMICOLON) GetSym();
+                else Error(5);
+            }while(SYM==REALSYM);
+        }
         while ( SYM==PROCSYM) {
             GetSym();
             if (SYM==IDENT) { ENTER(PROCEDUR,LEV,TX,DX); GetSym(); }
@@ -1180,6 +1282,32 @@ void MainWindow::Interpret() {
                     fprintf(FOUT,"? %c\n",c);
                 }
                 break;
+            case 22: // 实数输出 (从放大1000倍的整数还原为实数)
+                {
+                    double realValue = S[T] / 1000.0;
+                    char buffer[50];
+                    sprintf(buffer, "%.3f", realValue);
+                    printfs(buffer);
+                    fprintf(FOUT,"%.3f\n", realValue);
+                    T--;
+                }
+                break;
+            case 23: // 实数输入
+                {
+                    T++;
+                    bool ok;
+                    double realInput = QInputDialog::getDouble(this, tr("实数输入"), tr("请输入一个实数："), 0.0, -1000000.0, 1000000.0, 3, &ok);
+                    if(ok){
+                        S[T] = (int)(realInput * 1000); // 放大1000倍存储为整数
+                    } else {
+                        S[T] = 0;
+                    }
+                    char buffer[50];
+                    sprintf(buffer, "? %.3f", realInput);
+                    printfs(buffer);
+                    fprintf(FOUT,"? %.3f\n", realInput);
+                }
+                break;
             }
             break;
         case LOD: T++; S[T]=S[BASE(I.L,B,S)+I.A]; break;
@@ -1216,15 +1344,18 @@ void MainWindow::runClicked(){
     strcpy(KWORD[13],"PROGRAM");
     strcpy(KWORD[14],"READ");     
     strcpy(KWORD[15],"READC");    // 字符输入关键字
-    strcpy(KWORD[16],"RETURN");   
-    strcpy(KWORD[17],"STEP");
-    strcpy(KWORD[18],"THEN");
-    strcpy(KWORD[19],"TO");      
-    strcpy(KWORD[20],"UNTIL");   
-    strcpy(KWORD[21],"VAR");
-    strcpy(KWORD[22],"WHILE");
-    strcpy(KWORD[23],"WRITE");
-    strcpy(KWORD[24],"WRITEC");   // 字符输出关键字
+    strcpy(KWORD[16],"READREAL"); // 实数输入关键字
+    strcpy(KWORD[17],"REAL");     // 实数类型关键字
+    strcpy(KWORD[18],"RETURN");   
+    strcpy(KWORD[19],"STEP");
+    strcpy(KWORD[20],"THEN");
+    strcpy(KWORD[21],"TO");      
+    strcpy(KWORD[22],"UNTIL");   
+    strcpy(KWORD[23],"VAR");
+    strcpy(KWORD[24],"WHILE");
+    strcpy(KWORD[25],"WRITE");
+    strcpy(KWORD[26],"WRITEC");   // 字符输出关键字
+    strcpy(KWORD[27],"WRITEREAL"); // 实数输出关键字
 
     // 对应的符号数组
     WSYM[ 1]=BEGINSYM;
@@ -1242,15 +1373,18 @@ void MainWindow::runClicked(){
     WSYM[13]=PROGSYM;
     WSYM[14]=READSYM;
     WSYM[15]=READCSYM;    // 字符输入符号
-    WSYM[16]=RETURNSYM;   	
-    WSYM[17]=STEPSYM;     	
-    WSYM[18]=THENSYM;
-    WSYM[19]=TOSYM;       
-    WSYM[20]=UNTILSYM;    	
-    WSYM[21]=VARSYM;
-    WSYM[22]=WHILESYM;
-    WSYM[23]=WRITESYM;
-    WSYM[24]=WRITECSYM;   // 字符输出符号
+    WSYM[16]=READREALNUM; // 实数输入符号
+    WSYM[17]=REALSYM;     // 实数类型符号
+    WSYM[18]=RETURNSYM;   	
+    WSYM[19]=STEPSYM;     	
+    WSYM[20]=THENSYM;
+    WSYM[21]=TOSYM;       
+    WSYM[22]=UNTILSYM;    	
+    WSYM[23]=VARSYM;
+    WSYM[24]=WHILESYM;
+    WSYM[25]=WRITESYM;
+    WSYM[26]=WRITECSYM;   // 字符输出符号
+    WSYM[27]=WRITEREALNUM; // 实数输出符号
 
     // 注释掉需要复合运算符处理的字符，让 GetSym() 函数统一处理
     // SSYM['+']=PLUS;      SSYM['-']=MINUS;  // 需要处理 +=, -=, ++, --
@@ -1284,6 +1418,7 @@ void MainWindow::runClicked(){
     DECLBEGSYS[CONSTSYM]=1;
     DECLBEGSYS[VARSYM]=1;
     DECLBEGSYS[CHARSYM]=1;   // 支持字符类型声明
+    DECLBEGSYS[REALSYM]=1;   // 支持实数类型声明
     DECLBEGSYS[PROCSYM]=1;
     STATBEGSYS[BEGINSYM]=1;
     STATBEGSYS[CALLSYM]=1;
@@ -1292,7 +1427,9 @@ void MainWindow::runClicked(){
     STATBEGSYS[FORSYM]=1;        // 添加FOR语句支持
     STATBEGSYS[WRITESYM]=1;
     STATBEGSYS[WRITECSYM]=1;     // 添加字符输出语句支持
+    STATBEGSYS[WRITEREALNUM]=1;  // 添加实数输出语句支持
     STATBEGSYS[READCSYM]=1;      // 添加字符输入语句支持
+    STATBEGSYS[READREALNUM]=1;   // 添加实数输入语句支持
     // 添加新的运算符到语句开始符号集
     // PLUSBECOMES 和 MINUSBECOMES 不需要在这里，因为它们跟在 IDENT 后面
     STATBEGSYS[PLUSPLUS]=1;
@@ -1304,6 +1441,7 @@ void MainWindow::runClicked(){
     // STATBEGSYS[NOTSYM]=1;  // 移除，因为 ! 单独使用时为非法
     FACBEGSYS[IDENT] =1;
     FACBEGSYS[NUMBER]=1;
+    FACBEGSYS[REALNUMBER]=1; // 支持实数常量
     FACBEGSYS[CHARACTER]=1;  // 支持字符常量
     FACBEGSYS[LPAREN]=1;
     FACBEGSYS[PLUSPLUS]=1;   // 支持前缀++

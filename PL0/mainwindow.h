@@ -16,7 +16,7 @@ class QButtonGroup;
 //extern char *SYMOUT[];
 typedef  int *SYMSET; // SET OF SYMBOL;
 typedef  char ALFA[11];
-typedef  enum { CONSTANT, VARIABLE, PROCEDUR, CHARCONST, CHARVARIABLE } OBJECTS ;
+typedef  enum { CONSTANT, VARIABLE, PROCEDUR, CHARCONST, CHARVARIABLE, REALCONST, REALVARIABLE } OBJECTS ;
 typedef  enum { LIT, OPR, LOD, STO, CAL, INI, JMP, JPC } FCT;
 
 class MainWindow : public QMainWindow
@@ -43,6 +43,7 @@ public:
     void ConstDeclaration(int LEV,int &TX,int &DX);
     void VarDeclaration(int LEV,int &TX,int &DX);
     void CharVarDeclaration(int LEV,int &TX,int &DX);  // 新增字符变量声明函数
+    void RealVarDeclaration(int LEV,int &TX,int &DX);  // 新增实数变量声明函数
     void ListCode(int CX0);
     void FACTOR(SYMSET FSYS, int LEV, int &TX);
     void TERM(SYMSET FSYS, int LEV, int &TX);
