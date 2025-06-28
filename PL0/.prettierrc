@@ -1,0 +1,35 @@
+{
+    "printWidth": 120,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": false,
+    "quoteProps": "as-needed",
+    "trailingComma": "es5",
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "arrowParens": "avoid",
+    "endOfLine": "crlf",
+    "overrides": [
+        {
+            "files": "*.html",
+            "options": {
+                "printWidth": 100,
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": "*.json",
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": "*.qss",
+            "options": {
+                "parser": "css",
+                "tabWidth": 4
+            }
+        }
+    ]
+}

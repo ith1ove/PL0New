@@ -3,18 +3,21 @@
 ## 改进内容
 
 ### 1. 布局方向变更
+
 - **原来**: 水平排列（左右布局）
 - **现在**: 垂直排列（上下布局）
 
 ### 2. 代码修改
 
 #### mainwindow.cpp
+
 ```cpp
 // 设置Tab Bar为垂直形状
 codeVisibilityTabBar->setShape(QTabBar::RoundedWest);
 ```
 
 #### 样式调整（QSS）
+
 - **边框**: 从 `border-bottom: none` 改为 `border-right: none`
 - **圆角**: 从 `border-top-left-radius, border-top-right-radius` 改为 `border-top-left-radius, border-bottom-left-radius`
 - **尺寸**: 从 `min-width: 60px` 改为 `min-height: 30px`
@@ -24,12 +27,14 @@ codeVisibilityTabBar->setShape(QTabBar::RoundedWest);
 ### 3. 视觉效果改进
 
 #### 垂直Tab的优势
+
 1. **更符合分组框布局**: 在垂直空间内排列更自然
 2. **文字显示更清晰**: 中文文字在垂直标签中更易阅读
 3. **空间利用更合理**: 避免水平空间浪费
 4. **视觉层次更明确**: 上下排列符合阅读习惯
 
 #### 样式特点
+
 - **标签形状**: 左侧圆角，右侧直角（类似左侧导航）
 - **选中状态**: 蓝色背景突出当前选项
 - **悬停效果**: 浅色背景提供交互反馈
@@ -38,6 +43,7 @@ codeVisibilityTabBar->setShape(QTabBar::RoundedWest);
 ### 4. Tab Bar形状选项
 
 Qt提供多种Tab Bar形状：
+
 - `QTabBar::RoundedNorth`: 顶部（默认）
 - `QTabBar::RoundedSouth`: 底部
 - `QTabBar::RoundedWest`: 左侧（已选择）
@@ -47,6 +53,7 @@ Qt提供多种Tab Bar形状：
 ### 5. 布局对比
 
 #### 水平布局（原来）
+
 ```
 目标代码
 ┌─────────┬─────────┐
@@ -55,6 +62,7 @@ Qt提供多种Tab Bar形状：
 ```
 
 #### 垂直布局（现在）
+
 ```
 目标代码
 ┌─────────┐

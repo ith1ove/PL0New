@@ -1,0 +1,22 @@
+{
+  "name": "pl0-compiler",
+  "version": "1.0.0",
+  "description": "PL0 编译器项目",
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "format:cpp": "clang-format -i -style=file *.cpp *.h",
+    "lint": "npm run format:check"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.0"
+  },
+  "keywords": [
+    "compiler",
+    "pl0",
+    "qt",
+    "cpp"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

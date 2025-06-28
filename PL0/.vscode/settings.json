@@ -39,7 +39,7 @@
   "C_Cpp_Runner.warningsAsError": false,
   "C_Cpp_Runner.compilerArgs": [
     "-DQT_CORE_LIB",
-    "-DQT_GUI_LIB", 
+    "-DQT_GUI_LIB",
     "-DQT_WIDGETS_LIB"
   ],
   "C_Cpp_Runner.linkerArgs": [
@@ -91,5 +91,41 @@
   "launch": {
     "configurations": [],
     "compounds": []
-  }
+  },
+
+  // 格式化配置
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // C++ 格式化
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools",
+    "editor.formatOnSave": true
+  },
+  "[c]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools",
+    "editor.formatOnSave": true
+  },
+
+  // Prettier 配置
+  "prettier.requireConfig": true,
+  "prettier.useEditorConfig": false,
+
+  // 其他文件类型格式化
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // EditorConfig 支持
+  "editorconfig.generateAuto": false
 }

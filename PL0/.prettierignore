@@ -1,0 +1,31 @@
+# Build outputs
+build/
+debug/
+release/
+*.o
+*.exe
+*.dll
+
+# Qt generated files
+moc_*.cpp
+moc_*.h
+moc_predefs.h
+qrc_*.cpp
+*.pro.user
+
+# Makefiles
+Makefile*
+!Makefile.manual
+
+# Test output files
+test/*.COD
+
+# Qt Creator files
+*.qtc_clangd/
+
+# VS Code settings (optional - remove if you want to format these)
+.vscode/
+
+# Backup files
+*_backup.*
+launch_backup.json

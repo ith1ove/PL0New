@@ -2,7 +2,7 @@
 
 /* 全局样式 */
 QMainWindow {
-    background-color: #f5f5f5;
+    background-color: #fbd3d3;
     color: #333333;
 }
 
@@ -29,13 +29,13 @@ QLineEdit {
 }
 
 QLineEdit:focus {
-    border-color: #2196F3;
+    border-color: #2196f3;
     background-color: #fafafa;
 }
 
 /* 按钮 - Material Design风格 */
 QPushButton {
-    background-color: #21f391;
+    background-color: #26f997;
     color: white;
     border: none;
     border-radius: 6px;
@@ -47,19 +47,19 @@ QPushButton {
 
 QPushButton:hover {
     background-color: #1abc70;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 QPushButton:pressed {
-    background-color: #1565C0;
+    background-color: #1565c0;
 }
 
 QPushButton#clearButton {
-    background-color: #FF5722;
+    background-color: #ff5722;
 }
 
 QPushButton#clearButton:hover {
-    background-color: #E64A19;
+    background-color: #e64a19;
 }
 
 /* 分组框 - 卡片式设计 */
@@ -77,7 +77,7 @@ QGroupBox::title {
     left: 15px;
     padding: 0 8px 0 8px;
     background-color: #ffffff;
-    color: #2196F3;
+    color: #21f372;
 }
 
 /* Tab样式的按钮 - 垂直排列且文字水平 */
@@ -93,9 +93,9 @@ QPushButton[objectName="tabButton"] {
 }
 
 QPushButton[objectName="tabButton"]:checked {
-    background-color: #2196F3;
+    background-color: #21f380;
     color: white;
-    border-color: #1976D2;
+    border-color: #1976d2;
 }
 
 QPushButton[objectName="tabButton"]:hover {
@@ -104,7 +104,7 @@ QPushButton[objectName="tabButton"]:hover {
 }
 
 QPushButton[objectName="tabButton"]:checked:hover {
-    background-color: #1976D2;
+    background-color: #18af5c;
 }
 
 /* 单选按钮 - 保留作为备用 */
@@ -120,15 +120,15 @@ QRadioButton::indicator {
 }
 
 QRadioButton::indicator:unchecked {
-    border: 2px solid #BDBDBD;
+    border: 2px solid #bdbdbd;
     border-radius: 8px;
     background-color: #ffffff;
 }
 
 QRadioButton::indicator:checked {
-    border: 2px solid #2196F3;
+    border: 2px solid #2196f3;
     border-radius: 8px;
-    background-color: #2196F3;
+    background-color: #2196f3;
 }
 
 QRadioButton::indicator:checked::before {

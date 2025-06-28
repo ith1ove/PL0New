@@ -1,354 +1,343 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PL0 编译器</title>
     <!-- Vue 3 + Vuetify 3 -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/vuetify@3.4.4/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@3.4.4/dist/vuetify.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/vuetify@3.4.4/dist/vuetify.min.js"></script>
     <!-- Material Design Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@7.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-        }
-        .code-editor {
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            background-color: #1e1e1e;
-            color: #d4d4d4;
-        }
-        .console-output {
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            background-color: #0d1117;
-            color: #c9d1d9;
-            max-height: 400px;
-            overflow-y: auto;
-        }
+      body {
+        margin: 0;
+        font-family: "Roboto", sans-serif;
+      }
+      .code-editor {
+        font-family: "Consolas", "Monaco", "Courier New", monospace;
+        background-color: #1e1e1e;
+        color: #d4d4d4;
+      }
+      .console-output {
+        font-family: "Consolas", "Monaco", "Courier New", monospace;
+        background-color: #0d1117;
+        color: #c9d1d9;
+        max-height: 400px;
+        overflow-y: auto;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="app">
-        <v-app>
-            <!-- 顶部应用栏 -->
-            <v-app-bar color="primary" prominent>
-                <v-app-bar-nav-icon></v-app-bar-nav-icon>
-                <v-toolbar-title>
-                    <v-icon left>mdi-code-braces</v-icon>
-                    广东工业大学 PL0 编译器
-                </v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-btn icon @click="toggleTheme">
-                    <v-icon>{{ isDark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
-                </v-btn>
-            </v-app-bar>
+      <v-app>
+        <!-- 顶部应用栏 -->
+        <v-app-bar color="primary" prominent>
+          <v-app-bar-nav-icon></v-app-bar-nav-icon>
+          <v-toolbar-title>
+            <v-icon left>mdi-code-braces</v-icon>
+            广东工业大学 PL0 编译器
+          </v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon @click="toggleTheme">
+            <v-icon>{{ isDark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
+          </v-btn>
+        </v-app-bar>
 
-            <!-- 主内容区 -->
-            <v-main>
-                <v-container fluid class="pa-4">
-                    <v-row>
-                        <!-- 左侧：代码编辑和输出区 -->
-                        <v-col cols="12" md="8">
-                            <v-card elevation="2" class="mb-4">
-                                <v-card-title>
-                                    <v-icon left color="primary">mdi-file-document-edit</v-icon>
-                                    源代码编辑
-                                </v-card-title>
-                                <v-card-text>
-                                    <v-textarea
-                                        v-model="sourceCode"
-                                        label="输入PL0源代码"
-                                        rows="12"
-                                        class="code-editor"
-                                        variant="outlined"
-                                        placeholder="program example;
+        <!-- 主内容区 -->
+        <v-main>
+          <v-container fluid class="pa-4">
+            <v-row>
+              <!-- 左侧：代码编辑和输出区 -->
+              <v-col cols="12" md="8">
+                <v-card elevation="2" class="mb-4">
+                  <v-card-title>
+                    <v-icon left color="primary">mdi-file-document-edit</v-icon>
+                    源代码编辑
+                  </v-card-title>
+                  <v-card-text>
+                    <v-textarea
+                      v-model="sourceCode"
+                      label="输入PL0源代码"
+                      rows="12"
+                      class="code-editor"
+                      variant="outlined"
+                      placeholder="program example;
 var x, y;
 begin
     x := 10;
     y := x + 5;
     write(y)
 end."
-                                    ></v-textarea>
-                                </v-card-text>
-                            </v-card>
-
-                            <!-- 编译输出区 -->
-                            <v-card elevation="2">
-                                <v-card-title>
-                                    <v-icon left color="success">mdi-console</v-icon>
-                                    编译输出
-                                    <v-spacer></v-spacer>
-                                    <v-btn size="small" icon @click="clearOutput">
-                                        <v-icon>mdi-delete-sweep</v-icon>
-                                    </v-btn>
-                                </v-card-title>
-                                <v-card-text>
-                                    <pre class="console-output pa-3" v-html="compileOutput"></pre>
-                                </v-card-text>
-                            </v-card>
-                        </v-col>
-
-                        <!-- 右侧：控制面板 -->
-                        <v-col cols="12" md="4">
-                            <!-- 文件操作 -->
-                            <v-card elevation="2" class="mb-4">
-                                <v-card-title>
-                                    <v-icon left color="info">mdi-file-cog</v-icon>
-                                    文件操作
-                                </v-card-title>
-                                <v-card-text>
-                                    <v-text-field
-                                        v-model="fileName"
-                                        label="源程序名"
-                                        prepend-inner-icon="mdi-file"
-                                        variant="outlined"
-                                        density="compact"
-                                        class="mb-3"
-                                    ></v-text-field>
-                                    
-                                    <v-btn
-                                        @click="compileAndRun"
-                                        color="primary"
-                                        size="large"
-                                        block
-                                        class="mb-2"
-                                        :loading="isCompiling"
-                                    >
-                                        <v-icon left>mdi-play</v-icon>
-                                        编译运行
-                                    </v-btn>
-                                    
-                                    <v-btn
-                                        @click="saveFile"
-                                        color="success"
-                                        variant="outlined"
-                                        block
-                                        class="mb-2"
-                                    >
-                                        <v-icon left>mdi-content-save</v-icon>
-                                        保存文件
-                                    </v-btn>
-                                    
-                                    <v-btn
-                                        @click="loadFile"
-                                        color="info"
-                                        variant="outlined"
-                                        block
-                                    >
-                                        <v-icon left>mdi-folder-open</v-icon>
-                                        加载文件
-                                    </v-btn>
-                                </v-card-text>
-                            </v-card>
-
-                            <!-- 编译选项 -->
-                            <v-card elevation="2" class="mb-4">
-                                <v-card-title>
-                                    <v-icon left color="warning">mdi-cog</v-icon>
-                                    编译选项
-                                </v-card-title>
-                                <v-card-text>
-                                    <v-switch
-                                        v-model="showTargetCode"
-                                        label="显示目标代码"
-                                        color="primary"
-                                        inset
-                                    ></v-switch>
-                                    
-                                    <v-switch
-                                        v-model="showDebugInfo"
-                                        label="显示调试信息"
-                                        color="primary"
-                                        inset
-                                    ></v-switch>
-                                    
-                                    <v-switch
-                                        v-model="autoSave"
-                                        label="自动保存"
-                                        color="primary"
-                                        inset
-                                    ></v-switch>
-                                </v-card-text>
-                            </v-card>
-
-                            <!-- 作者信息 -->
-                            <v-card elevation="2">
-                                <v-card-title>
-                                    <v-icon left color="purple">mdi-account-circle</v-icon>
-                                    作者信息
-                                </v-card-title>
-                                <v-card-text>
-                                    <v-list density="compact">
-                                        <v-list-item>
-                                            <v-list-item-title>曾繁林</v-list-item-title>
-                                            <v-list-item-subtitle>作者</v-list-item-subtitle>
-                                        </v-list-item>
-                                        <v-list-item>
-                                            <v-list-item-title>信息安全2班</v-list-item-title>
-                                            <v-list-item-subtitle>班级</v-list-item-subtitle>
-                                        </v-list-item>
-                                        <v-list-item>
-                                            <v-list-item-title>3122004715</v-list-item-title>
-                                            <v-list-item-subtitle>学号</v-list-item-subtitle>
-                                        </v-list-item>
-                                    </v-list>
-                                </v-card-text>
-                            </v-card>
-                        </v-col>
-                    </v-row>
-                </v-container>
-            </v-main>
-
-            <!-- 底部状态栏 -->
-            <v-footer app color="surface">
-                <v-row>
-                    <v-col>
-                        <span class="text-caption">
-                            <v-icon size="small" left>mdi-information</v-icon>
-                            状态: {{ compileStatus }}
-                        </span>
-                    </v-col>
-                    <v-col class="text-right">
-                        <span class="text-caption">
-                            行: {{ currentLine }} | 列: {{ currentColumn }}
-                        </span>
-                    </v-col>
-                </v-row>
-            </v-footer>
-
-            <!-- 加载对话框 -->
-            <v-dialog v-model="showLoadingDialog" persistent width="300">
-                <v-card>
-                    <v-card-text class="text-center py-5">
-                        <v-progress-circular indeterminate color="primary" class="mb-3"></v-progress-circular>
-                        <div>正在编译...</div>
-                    </v-card-text>
+                    ></v-textarea>
+                  </v-card-text>
                 </v-card>
-            </v-dialog>
-        </v-app>
+
+                <!-- 编译输出区 -->
+                <v-card elevation="2">
+                  <v-card-title>
+                    <v-icon left color="success">mdi-console</v-icon>
+                    编译输出
+                    <v-spacer></v-spacer>
+                    <v-btn size="small" icon @click="clearOutput">
+                      <v-icon>mdi-delete-sweep</v-icon>
+                    </v-btn>
+                  </v-card-title>
+                  <v-card-text>
+                    <pre class="console-output pa-3" v-html="compileOutput"></pre>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+
+              <!-- 右侧：控制面板 -->
+              <v-col cols="12" md="4">
+                <!-- 文件操作 -->
+                <v-card elevation="2" class="mb-4">
+                  <v-card-title>
+                    <v-icon left color="info">mdi-file-cog</v-icon>
+                    文件操作
+                  </v-card-title>
+                  <v-card-text>
+                    <v-text-field
+                      v-model="fileName"
+                      label="源程序名"
+                      prepend-inner-icon="mdi-file"
+                      variant="outlined"
+                      density="compact"
+                      class="mb-3"
+                    ></v-text-field>
+
+                    <v-btn
+                      @click="compileAndRun"
+                      color="primary"
+                      size="large"
+                      block
+                      class="mb-2"
+                      :loading="isCompiling"
+                    >
+                      <v-icon left>mdi-play</v-icon>
+                      编译运行
+                    </v-btn>
+
+                    <v-btn @click="saveFile" color="success" variant="outlined" block class="mb-2">
+                      <v-icon left>mdi-content-save</v-icon>
+                      保存文件
+                    </v-btn>
+
+                    <v-btn @click="loadFile" color="info" variant="outlined" block>
+                      <v-icon left>mdi-folder-open</v-icon>
+                      加载文件
+                    </v-btn>
+                  </v-card-text>
+                </v-card>
+
+                <!-- 编译选项 -->
+                <v-card elevation="2" class="mb-4">
+                  <v-card-title>
+                    <v-icon left color="warning">mdi-cog</v-icon>
+                    编译选项
+                  </v-card-title>
+                  <v-card-text>
+                    <v-switch
+                      v-model="showTargetCode"
+                      label="显示目标代码"
+                      color="primary"
+                      inset
+                    ></v-switch>
+
+                    <v-switch
+                      v-model="showDebugInfo"
+                      label="显示调试信息"
+                      color="primary"
+                      inset
+                    ></v-switch>
+
+                    <v-switch v-model="autoSave" label="自动保存" color="primary" inset></v-switch>
+                  </v-card-text>
+                </v-card>
+
+                <!-- 作者信息 -->
+                <v-card elevation="2">
+                  <v-card-title>
+                    <v-icon left color="purple">mdi-account-circle</v-icon>
+                    作者信息
+                  </v-card-title>
+                  <v-card-text>
+                    <v-list density="compact">
+                      <v-list-item>
+                        <v-list-item-title>曾繁林</v-list-item-title>
+                        <v-list-item-subtitle>作者</v-list-item-subtitle>
+                      </v-list-item>
+                      <v-list-item>
+                        <v-list-item-title>信息安全2班</v-list-item-title>
+                        <v-list-item-subtitle>班级</v-list-item-subtitle>
+                      </v-list-item>
+                      <v-list-item>
+                        <v-list-item-title>3122004715</v-list-item-title>
+                        <v-list-item-subtitle>学号</v-list-item-subtitle>
+                      </v-list-item>
+                    </v-list>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-main>
+
+        <!-- 底部状态栏 -->
+        <v-footer app color="surface">
+          <v-row>
+            <v-col>
+              <span class="text-caption">
+                <v-icon size="small" left>mdi-information</v-icon>
+                状态: {{ compileStatus }}
+              </span>
+            </v-col>
+            <v-col class="text-right">
+              <span class="text-caption"> 行: {{ currentLine }} | 列: {{ currentColumn }} </span>
+            </v-col>
+          </v-row>
+        </v-footer>
+
+        <!-- 加载对话框 -->
+        <v-dialog v-model="showLoadingDialog" persistent width="300">
+          <v-card>
+            <v-card-text class="text-center py-5">
+              <v-progress-circular indeterminate color="primary" class="mb-3"></v-progress-circular>
+              <div>正在编译...</div>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+      </v-app>
     </div>
 
     <script>
-        const { createApp } = Vue;
-        const { createVuetify } = Vuetify;
+      const { createApp } = Vue;
+      const { createVuetify } = Vuetify;
 
-        const vuetify = createVuetify({
-            theme: {
-                defaultTheme: 'light',
-                themes: {
-                    light: {
-                        colors: {
-                            primary: '#1976D2',
-                            secondary: '#424242',
-                            accent: '#82B1FF',
-                            error: '#FF5252',
-                            info: '#2196F3',
-                            success: '#4CAF50',
-                            warning: '#FFC107',
-                        }
-                    },
-                    dark: {
-                        colors: {
-                            primary: '#2196F3',
-                            secondary: '#424242',
-                            accent: '#FF4081',
-                            error: '#FF5252',
-                            info: '#2196F3',
-                            success: '#4CAF50',
-                            warning: '#FFC107',
-                        }
-                    }
-                }
-            }
-        });
+      const vuetify = createVuetify({
+        theme: {
+          defaultTheme: "light",
+          themes: {
+            light: {
+              colors: {
+                primary: "#1976D2",
+                secondary: "#424242",
+                accent: "#82B1FF",
+                error: "#FF5252",
+                info: "#2196F3",
+                success: "#4CAF50",
+                warning: "#FFC107",
+              },
+            },
+            dark: {
+              colors: {
+                primary: "#2196F3",
+                secondary: "#424242",
+                accent: "#FF4081",
+                error: "#FF5252",
+                info: "#2196F3",
+                success: "#4CAF50",
+                warning: "#FFC107",
+              },
+            },
+          },
+        },
+      });
 
-        createApp({
-            data() {
-                return {
-                    sourceCode: `program example;
+      createApp({
+        data() {
+          return {
+            sourceCode: `program example;
 var x, y;
 begin
     x := 10;
     y := x + 5;
     write(y)
 end.`,
-                    fileName: 'EX09',
-                    compileOutput: '<span style="color: #4CAF50;">***** PL/0 Compiler Demo *****</span>\n<span style="color: #2196F3;">欢迎使用现代化PL0编译器！</span>',
-                    showTargetCode: true,
-                    showDebugInfo: false,
-                    autoSave: false,
-                    isCompiling: false,
-                    showLoadingDialog: false,
-                    compileStatus: '就绪',
-                    currentLine: 1,
-                    currentColumn: 1,
-                    isDark: false
-                }
-            },
-            methods: {
-                async compileAndRun() {
-                    this.isCompiling = true;
-                    this.showLoadingDialog = true;
-                    this.compileStatus = '编译中...';
-                    
-                    // 模拟编译过程
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                    
-                    // 调用Qt后端编译函数
-                    if (window.qtBridge) {
-                        const result = window.qtBridge.compileCode(this.sourceCode, this.fileName);
-                        this.compileOutput += '\n' + result;
-                    } else {
-                        // 模拟编译结果
-                        this.compileOutput += '\n<span style="color: #4CAF50;">=== 编译成功 ===</span>';
-                        this.compileOutput += '\n<span style="color: #FFC107;">目标代码已生成</span>';
-                        this.compileStatus = '编译成功';
-                    }
-                    
-                    this.isCompiling = false;
-                    this.showLoadingDialog = false;
-                },
-                clearOutput() {
-                    this.compileOutput = '<span style="color: #4CAF50;">***** PL/0 Compiler Demo *****</span>';
-                    this.compileStatus = '就绪';
-                },
-                saveFile() {
-                    if (window.qtBridge) {
-                        window.qtBridge.saveFile(this.fileName, this.sourceCode);
-                    }
-                    this.compileStatus = '文件已保存';
-                },
-                loadFile() {
-                    if (window.qtBridge) {
-                        const content = window.qtBridge.loadFile(this.fileName);
-                        if (content) {
-                            this.sourceCode = content;
-                            this.compileStatus = '文件已加载';
-                        }
-                    }
-                },
-                toggleTheme() {
-                    this.isDark = !this.isDark;
-                    this.$vuetify.theme.global.name = this.isDark ? 'dark' : 'light';
-                }
-            },
-            mounted() {
-                // 监听文本区域变化以更新行列信息
-                this.$nextTick(() => {
-                    const textarea = document.querySelector('textarea');
-                    if (textarea) {
-                        textarea.addEventListener('input', (e) => {
-                            const text = e.target.value;
-                            const lines = text.substr(0, e.target.selectionStart).split('\n');
-                            this.currentLine = lines.length;
-                            this.currentColumn = lines[lines.length - 1].length + 1;
-                        });
-                    }
-                });
+            fileName: "EX09",
+            compileOutput:
+              '<span style="color: #4CAF50;">***** PL/0 Compiler Demo *****</span>\n<span style="color: #2196F3;">欢迎使用现代化PL0编译器！</span>',
+            showTargetCode: true,
+            showDebugInfo: false,
+            autoSave: false,
+            isCompiling: false,
+            showLoadingDialog: false,
+            compileStatus: "就绪",
+            currentLine: 1,
+            currentColumn: 1,
+            isDark: false,
+          };
+        },
+        methods: {
+          async compileAndRun() {
+            this.isCompiling = true;
+            this.showLoadingDialog = true;
+            this.compileStatus = "编译中...";
+
+            // 模拟编译过程
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            // 调用Qt后端编译函数
+            if (window.qtBridge) {
+              const result = window.qtBridge.compileCode(this.sourceCode, this.fileName);
+              this.compileOutput += "\n" + result;
+            } else {
+              // 模拟编译结果
+              this.compileOutput += '\n<span style="color: #4CAF50;">=== 编译成功 ===</span>';
+              this.compileOutput += '\n<span style="color: #FFC107;">目标代码已生成</span>';
+              this.compileStatus = "编译成功";
             }
-        }).use(vuetify).mount('#app');
+
+            this.isCompiling = false;
+            this.showLoadingDialog = false;
+          },
+          clearOutput() {
+            this.compileOutput =
+              '<span style="color: #4CAF50;">***** PL/0 Compiler Demo *****</span>';
+            this.compileStatus = "就绪";
+          },
+          saveFile() {
+            if (window.qtBridge) {
+              window.qtBridge.saveFile(this.fileName, this.sourceCode);
+            }
+            this.compileStatus = "文件已保存";
+          },
+          loadFile() {
+            if (window.qtBridge) {
+              const content = window.qtBridge.loadFile(this.fileName);
+              if (content) {
+                this.sourceCode = content;
+                this.compileStatus = "文件已加载";
+              }
+            }
+          },
+          toggleTheme() {
+            this.isDark = !this.isDark;
+            this.$vuetify.theme.global.name = this.isDark ? "dark" : "light";
+          },
+        },
+        mounted() {
+          // 监听文本区域变化以更新行列信息
+          this.$nextTick(() => {
+            const textarea = document.querySelector("textarea");
+            if (textarea) {
+              textarea.addEventListener("input", e => {
+                const text = e.target.value;
+                const lines = text.substr(0, e.target.selectionStart).split("\n");
+                this.currentLine = lines.length;
+                this.currentColumn = lines[lines.length - 1].length + 1;
+              });
+            }
+          });
+        },
+      })
+        .use(vuetify)
+        .mount("#app");
     </script>
-</body>
+  </body>
 </html>

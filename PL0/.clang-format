@@ -1,0 +1,38 @@
+# C++ 代码格式化配置
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 120
+
+# 大括号风格
+BreakBeforeBraces: Allman
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+
+# 指针和引用对齐
+PointerAlignment: Left
+ReferenceAlignment: Left
+
+# 访问修饰符
+AccessModifierOffset: -4
+IndentAccessModifiers: false
+
+# 命名空间
+NamespaceIndentation: None
+
+# 函数参数
+AlignAfterOpenBracket: Align
+AllowAllParametersOfDeclarationOnNextLine: true
+
+# 注释
+ReflowComments: true
+
+# 排序
+SortIncludes: true
+SortUsingDeclarations: true
+
+# Qt 特定
+# 保持 Qt 信号和槽的格式
+QualifierAlignment: Leave
