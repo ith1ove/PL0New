@@ -1,0 +1,10 @@
+program test_real_basic;
+const 
+    half = 0.5;
+real 
+    x, result;
+begin
+    x := 2.0;
+    result := x + half;
+    writereal(result)
+end.

@@ -1,0 +1,9 @@
+program test_real;
+const 
+    pi = 3.14;
+real 
+    x;
+begin
+    x := 2.5;
+    writereal(x)
+end.

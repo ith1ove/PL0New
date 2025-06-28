@@ -19,7 +19,7 @@
  10 OPR 0 0
 ~~~ RUN PL0 ~~~
 H
-? A
-A
+? B
+B
 ~~~ END PL0 ~~~
 

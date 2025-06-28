@@ -1,0 +1,50 @@
+=== COMPILE PL0 ===
+  0 program EX15; 
+  0 const  
+  1     half = 0.5; 
+  1 real  
+  1     x, y, sum, product; 
+  1  
+  1 begin 
+  2     readreal(x); 
+  4     readreal(y); 
+  6      
+  6     sum := x + y; 
+ 10     product := x * y; 
+ 14      
+ 14     writereal(sum); 
+ 17     writereal(product); 
+ 20     writereal(half) 
+ 22 end. 
+  0 JMP 0 1
+  1 INI 0 7
+  2 OPR 0 23
+  3 STO 0 3
+  4 OPR 0 23
+  5 STO 0 4
+  6 LOD 0 3
+  7 LOD 0 4
+  8 OPR 0 2
+  9 STO 0 5
+ 10 LOD 0 3
+ 11 LOD 0 4
+ 12 OPR 0 4
+ 13 STO 0 6
+ 14 LOD 0 5
+ 15 OPR 0 22
+ 16 OPR 0 15
+ 17 LOD 0 6
+ 18 OPR 0 22
+ 19 OPR 0 15
+ 20 LIT 0 500
+ 21 OPR 0 22
+ 22 OPR 0 15
+ 23 OPR 0 0
+~~~ RUN PL0 ~~~
+? 1.035
+? 2.333
+3.368
+2.414
+0.500
+~~~ END PL0 ~~~
+

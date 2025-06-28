@@ -40,7 +40,7 @@ typedef enum  { NUL, IDENT, NUMBER, PLUS, MINUS, TIMES,
                WRITEREALNUM, READREALNUM  // 新增实数读写函数
                // ↑↑↑ 新增部分 ↑↑↑
 } SYMBOL;
-char *SYMOUT[] = {"NUL", "IDENT", "NUMBER", "PLUS", "MINUS", "TIMES",
+const char *SYMOUT[] = {"NUL", "IDENT", "NUMBER", "PLUS", "MINUS", "TIMES",
     "SLASH", "ODDSYM", "EQL", "NEQ", "LSS", "LEQ", "GTR", "GEQ",
     "LPAREN", "RPAREN", "COMMA", "SEMICOLON", "PERIOD",
     "BECOMES", "BEGINSYM", "ENDSYM", "IFSYM", "THENSYM",
@@ -60,7 +60,7 @@ char *SYMOUT[] = {"NUL", "IDENT", "NUMBER", "PLUS", "MINUS", "TIMES",
 };
 //typedef  int *SYMSET; // SET OF SYMBOL;
 //typedef  char ALFA[11];
-//typedef  enum { CONSTANT, VARIABLE, PROCEDUR } OBJECTS ;
+//typedef  enum { CONSTANT, VARIABLE, PROCEDUR, REALCONST, CHARCONST, REALVARIABLE, CHARVARIABLE } OBJECTS;
 //typedef  enum { LIT, OPR, LOD, STO, CAL, INI, JMP, JPC } FCT;
 typedef struct {
     FCT F;     /*FUNCTION CODE*/
@@ -413,7 +413,7 @@ void MainWindow::GetSym() {
                         }
                     }
                     else { 
-                        SYM=SSYM[CH]; 
+                        SYM=SSYM[(unsigned char)CH]; 
                         GetCh(); 
                     }
 } /*GetSym()*/
@@ -1216,8 +1216,8 @@ void MainWindow::Interpret() {
             case 1: S[T]=-S[T];  break;
             case 2: T--; S[T]=S[T]+S[T+1];   break;
             case 3: T--; S[T]=S[T]-S[T+1];   break;
-            case 4: T--; S[T]=S[T]*S[T+1];   break;
-            case 5: T--; S[T]=S[T]/S[T+1]; break;
+            case 4: T--; S[T]=S[T]*S[T+1]/1000;   break; // 实数乘法需要除以1000
+            case 5: T--; S[T]=S[T]*1000/S[T+1]; break; // 实数除法需要乘以1000
             case 6: S[T]=(S[T]%2!=0);        break;
             case 8: T--; S[T]=S[T]==S[T+1];  break;
             case 9: T--; S[T]=S[T]!=S[T+1];  break;
@@ -1327,7 +1327,7 @@ void MainWindow::Interpret() {
 //---------------------------------------------------------------------------
 
 void MainWindow::runClicked(){
-    for (CH=' '; CH<='^'; CH++) SSYM[CH]=NUL;
+    for (CH=' '; CH<='^'; CH++) SSYM[(unsigned char)CH]=NUL;
 
     strcpy(KWORD[ 1],"BEGIN");
     strcpy(KWORD[ 2],"CALL");

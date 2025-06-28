@@ -1,56 +1,17 @@
-program ex15;
+program EX15;
 const 
-    pi = 3.14159, 
-    e = 2.71828;
+    half = 0.5;
 real 
-    radius, area, circumference,
-    base, height, triangle_area,
-    result;
-var 
-    choice;
+    x, y, sum, product;
 
 begin
-    write("实数类型演示程序");
-    write("1. 圆形计算");
-    write("2. 三角形面积计算");
-    write("3. 实数四则运算");
-    write("请选择功能(1-3): ");
-    read(choice);
+    readreal(x);
+    readreal(y);
     
-    if choice = 1 then
-    begin
-        write("请输入圆的半径: ");
-        readreal(radius);
-        area := pi * radius * radius;
-        circumference := 2.0 * pi * radius;
-        write("圆的面积: ");
-        writereal(area);
-        write("圆的周长: ");
-        writereal(circumference)
-    end
-    else if choice = 2 then
-    begin
-        write("请输入三角形底边长: ");
-        readreal(base);
-        write("请输入三角形高: ");
-        readreal(height);
-        triangle_area := 0.5 * base * height;
-        write("三角形面积: ");
-        writereal(triangle_area)
-    end
-    else if choice = 3 then
-    begin
-        write("实数运算演示:");
-        result := pi + e;
-        write("π + e = ");
-        writereal(result);
-        result := pi * e;
-        write("π × e = ");
-        writereal(result);
-        result := pi / e;
-        write("π ÷ e = ");
-        writereal(result)
-    end
-    else
-        write("无效选择!")
+    sum := x + y;
+    product := x * y;
+    
+    writereal(sum);
+    writereal(product);
+    writereal(half)
 end.
