@@ -1,0 +1,32 @@
+PROGRAM EX19;
+// 测试递归函数 - 计算阶乘
+VAR X, Y;
+
+FUNCTION FACTORIAL(N);
+BEGIN
+    IF N <= 1 THEN
+        RETURN 1
+    ELSE
+        RETURN N * FACTORIAL(N - 1)
+END;
+
+FUNCTION FIBONACCI(N);
+BEGIN
+    IF N <= 0 THEN
+        RETURN 0
+    ELSE
+        IF N = 1 THEN
+            RETURN 1
+        ELSE
+            RETURN FIBONACCI(N - 1) + FIBONACCI(N - 2)
+END;
+
+BEGIN
+    X := FACTORIAL(5);
+    WRITE(X);  // 应该输出 120
+
+    Y := FIBONACCI(6);
+    WRITE(Y);  // 应该输出 8 (斐波那契数列的第6项)
+
+    WRITE(FACTORIAL(4)); // 应该输出 24
+END.

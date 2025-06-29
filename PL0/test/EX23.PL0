@@ -1,0 +1,19 @@
+PROGRAM EX23;
+// 简单递归测试 - 诊断递归问题
+VAR RESULT;
+
+FUNCTION SIMPLE_FACT(N);
+BEGIN
+    IF N <= 1 THEN
+        RETURN 1
+    ELSE
+        RETURN N * SIMPLE_FACT(N - 1)
+END;
+
+BEGIN
+    RESULT := SIMPLE_FACT(3);
+    WRITE(RESULT);  // 应该输出 6 (3*2*1)
+
+    RESULT := SIMPLE_FACT(4);
+    WRITE(RESULT);  // 应该输出 24 (4*3*2*1)
+END.

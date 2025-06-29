@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 17.0.0, 2025-06-29T04:51:26. -->
+<!-- Written by QtCreator 17.0.0, 2025-06-29T06:54:22. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -169,7 +169,7 @@
      <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
      <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
      <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-     <value type="QString" key="RunConfiguration.WorkingDirectory">C:/Users/ith1ove/Desktop/compiledemo/PL0New/PL0</value>
+     <value type="QString" key="RunConfiguration.WorkingDirectory">C:/Users/ith1ove/Desktop/compiledemo/PL0New/PL0/test</value>
      <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/ith1ove/Desktop/compiledemo/PL0New/PL0/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug</value>
     </valuemap>
     <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
@@ -206,7 +206,7 @@
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory">C:/Users/ith1ove/Desktop/compiledemo/PL0New/PL0</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory">C:/Users/ith1ove/Desktop/compiledemo/PL0New/PL0/test</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/ith1ove/Desktop/compiledemo/PL0New/PL0/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>

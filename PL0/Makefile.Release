@@ -1001,7 +1001,21 @@ release/PL0.o: PL0.cpp mainwindow.h \
 		H:/Qt/6.9.1/mingw_64/include/QtCore/qlocale.h \
 		H:/Qt/6.9.1/mingw_64/include/QtGui/qguiapplication_platform.h \
 		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qtabwidget.h \
-		H:/Qt/6.9.1/mingw_64/include/QtWidgets/QLineEdit \
+		H:/Qt/6.9.1/mingw_64/include/QtWidgets/QButtonGroup \
+		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qbuttongroup.h \
+		H:/Qt/6.9.1/mingw_64/include/QtCore/QDir \
+		H:/Qt/6.9.1/mingw_64/include/QtCore/qdir.h \
+		H:/Qt/6.9.1/mingw_64/include/QtCore/qdirlisting.h \
+		H:/Qt/6.9.1/mingw_64/include/QtCore/qfiledevice.h \
+		H:/Qt/6.9.1/mingw_64/include/QtCore/qdatetime.h \
+		H:/Qt/6.9.1/mingw_64/include/QtCore/qcalendar.h \
+		H:/Qt/6.9.1/mingw_64/include/QtCore/qfile.h \
+		H:/Qt/6.9.1/mingw_64/include/QtCore/qfileinfo.h \
+		H:/Qt/6.9.1/mingw_64/include/QtCore/qtimezone.h \
+		H:/Qt/6.9.1/mingw_64/include/QtCore/QFile \
+		H:/Qt/6.9.1/mingw_64/include/QtCore/QFileInfo \
+		H:/Qt/6.9.1/mingw_64/include/QtWidgets/QInputDialog \
+		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qinputdialog.h \
 		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qlineedit.h \
 		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qframe.h \
 		H:/Qt/6.9.1/mingw_64/include/QtGui/qtextcursor.h \
@@ -1009,30 +1023,16 @@ release/PL0.o: PL0.cpp mainwindow.h \
 		H:/Qt/6.9.1/mingw_64/include/QtGui/qtextformat.h \
 		H:/Qt/6.9.1/mingw_64/include/QtGui/qpen.h \
 		H:/Qt/6.9.1/mingw_64/include/QtGui/qtextoption.h \
-		H:/Qt/6.9.1/mingw_64/include/QtWidgets/QTextEdit \
-		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qtextedit.h \
-		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qabstractscrollarea.h \
-		H:/Qt/6.9.1/mingw_64/include/QtWidgets/QInputDialog \
-		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qinputdialog.h \
 		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qdialog.h \
+		H:/Qt/6.9.1/mingw_64/include/QtWidgets/QLineEdit \
 		H:/Qt/6.9.1/mingw_64/include/QtWidgets/QRadioButton \
 		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qradiobutton.h \
 		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qabstractbutton.h \
 		H:/Qt/6.9.1/mingw_64/include/QtWidgets/QTabBar \
 		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qtabbar.h \
-		H:/Qt/6.9.1/mingw_64/include/QtWidgets/QButtonGroup \
-		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qbuttongroup.h \
-		H:/Qt/6.9.1/mingw_64/include/QtCore/QFile \
-		H:/Qt/6.9.1/mingw_64/include/QtCore/qfile.h \
-		H:/Qt/6.9.1/mingw_64/include/QtCore/qfiledevice.h \
-		H:/Qt/6.9.1/mingw_64/include/QtCore/QFileInfo \
-		H:/Qt/6.9.1/mingw_64/include/QtCore/qfileinfo.h \
-		H:/Qt/6.9.1/mingw_64/include/QtCore/qdatetime.h \
-		H:/Qt/6.9.1/mingw_64/include/QtCore/qcalendar.h \
-		H:/Qt/6.9.1/mingw_64/include/QtCore/qtimezone.h \
-		H:/Qt/6.9.1/mingw_64/include/QtCore/QDir \
-		H:/Qt/6.9.1/mingw_64/include/QtCore/qdir.h \
-		H:/Qt/6.9.1/mingw_64/include/QtCore/qdirlisting.h
+		H:/Qt/6.9.1/mingw_64/include/QtWidgets/QTextEdit \
+		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qtextedit.h \
+		H:/Qt/6.9.1/mingw_64/include/QtWidgets/qabstractscrollarea.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/PL0.o PL0.cpp
 
 release/qrc_resources.o: release/qrc_resources.cpp 

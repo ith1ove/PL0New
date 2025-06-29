@@ -1,0 +1,144 @@
+=== COMPILE PL0 ===
+  0 PROGRAM EX19; 
+  0 // 测试递归函数 - 计算阶乘 
+  0 VAR X, Y; 
+  1  
+  1 FUNCTION FACTORIAL(N); 
+  1 BEGIN 
+  3     IF N <= 1 THEN 
+  6         RETURN 1 
+  8     ELSE 
+  9         RETURN N * FACTORIAL(N - 1) 
+ 14 END; 
+  2 INI 0 3
+  3 LOD 0 -1
+  4 LIT 0 1
+  5 OPR 0 13
+  6 JPC 0 10
+  7 LIT 0 1
+  8 RET 0 1
+  9 JMP 0 17
+ 10 LOD 0 -1
+ 11 LOD 0 -1
+ 12 LIT 0 1
+ 13 OPR 0 3
+ 14 CAL 1 2
+ 15 OPR 0 4
+ 16 RET 0 1
+ 17 OPR 0 0
+ 18  
+ 18 FUNCTION FIBONACCI(N); 
+ 18 BEGIN 
+ 20     IF N <= 0 THEN 
+ 23         RETURN 0 
+ 25     ELSE 
+ 26         IF N = 1 THEN 
+ 30             RETURN 1 
+ 32         ELSE 
+ 33             RETURN FIBONACCI(N - 1) + FIBONACCI(N - 2) 
+ 41 END; 
+ 19 INI 0 3
+ 20 LOD 0 -1
+ 21 LIT 0 0
+ 22 OPR 0 13
+ 23 JPC 0 27
+ 24 LIT 0 0
+ 25 RET 0 1
+ 26 JMP 0 44
+ 27 LOD 0 -1
+ 28 LIT 0 1
+ 29 OPR 0 8
+ 30 JPC 0 34
+ 31 LIT 0 1
+ 32 RET 0 1
+ 33 JMP 0 44
+ 34 LOD 0 -1
+ 35 LIT 0 1
+ 36 OPR 0 3
+ 37 CAL 1 19
+ 38 LOD 0 -1
+ 39 LIT 0 2
+ 40 OPR 0 3
+ 41 CAL 1 19
+ 42 OPR 0 2
+ 43 RET 0 1
+ 44 OPR 0 0
+ 45  
+ 45 BEGIN 
+ 46     X := FACTORIAL(5); 
+ 49     WRITE(X);  // 应该输出 120 
+ 52  
+ 52     Y := FIBONACCI(6); 
+ 55     WRITE(Y);  // 应该输出 8 (斐波那契数列的第6项) 
+ 58  
+ 58     WRITE(FACTORIAL(4)); // 应该输出 24 
+ 62 END. 
+  0 JMP 0 45
+  1 JMP 0 18
+  2 INI 0 3
+  3 LOD 0 -1
+  4 LIT 0 1
+  5 OPR 0 13
+  6 JPC 0 10
+  7 LIT 0 1
+  8 RET 0 1
+  9 JMP 0 17
+ 10 LOD 0 -1
+ 11 LOD 0 -1
+ 12 LIT 0 1
+ 13 OPR 0 3
+ 14 CAL 1 2
+ 15 OPR 0 4
+ 16 RET 0 1
+ 17 OPR 0 0
+ 18 JMP 0 45
+ 19 INI 0 3
+ 20 LOD 0 -1
+ 21 LIT 0 0
+ 22 OPR 0 13
+ 23 JPC 0 27
+ 24 LIT 0 0
+ 25 RET 0 1
+ 26 JMP 0 44
+ 27 LOD 0 -1
+ 28 LIT 0 1
+ 29 OPR 0 8
+ 30 JPC 0 34
+ 31 LIT 0 1
+ 32 RET 0 1
+ 33 JMP 0 44
+ 34 LOD 0 -1
+ 35 LIT 0 1
+ 36 OPR 0 3
+ 37 CAL 1 19
+ 38 LOD 0 -1
+ 39 LIT 0 2
+ 40 OPR 0 3
+ 41 CAL 1 19
+ 42 OPR 0 2
+ 43 RET 0 1
+ 44 OPR 0 0
+ 45 INI 0 5
+ 46 LIT 0 5
+ 47 CAL 0 2
+ 48 STO 0 3
+ 49 LOD 0 3
+ 50 OPR 0 14
+ 51 OPR 0 15
+ 52 LIT 0 6
+ 53 CAL 0 19
+ 54 STO 0 4
+ 55 LOD 0 4
+ 56 OPR 0 14
+ 57 OPR 0 15
+ 58 LIT 0 4
+ 59 CAL 0 2
+ 60 OPR 0 14
+ 61 OPR 0 15
+ 62 OPR 0 0
+~~~ RUN PL0 ~~~
+24
+6
+6
+~~~ END PL0 ~~~
+

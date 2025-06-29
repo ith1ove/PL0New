@@ -1,0 +1,13 @@
+PROGRAM DEBUG_TEST;
+// 最简单的参数测试
+VAR RESULT;
+
+FUNCTION ADD_ONE(X);
+BEGIN
+    RETURN X + 1
+END;
+
+BEGIN
+    RESULT := ADD_ONE(5);
+    WRITE(RESULT)  // 应该输出 6
+END.

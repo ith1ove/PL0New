@@ -1,0 +1,25 @@
+PROGRAM EX22;
+// 最终测试：验证函数功能的完整性
+
+VAR RESULT;
+
+FUNCTION ADD(A, B);
+BEGIN
+    RETURN A + B
+END;
+
+FUNCTION MULTIPLY(X, Y);
+BEGIN
+    RETURN X * Y
+END;
+
+BEGIN
+    RESULT := ADD(10, 20);
+    WRITE(RESULT);  // 应该输出 30
+
+    RESULT := MULTIPLY(5, 6);
+    WRITE(RESULT);  // 应该输出 30
+
+    RESULT := ADD(MULTIPLY(3, 4), 18);
+    WRITE(RESULT);  // 应该输出 30 (12+18)
+END.

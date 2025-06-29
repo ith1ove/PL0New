@@ -1,0 +1,40 @@
+=== COMPILE PL0 ===
+  0 PROGRAM EX21; 
+  0 // 最简单的带参数函数测试 
+  0 VAR X; 
+  1  
+  1 FUNCTION DOUBLE(N); 
+  1 BEGIN 
+  3     RETURN N + N 
+  5 END; 
+  2 INI 0 3
+  3 LOD 0 -2
+  4 LOD 0 -2
+  5 OPR 0 2
+  6 RET 0 1
+  7 OPR 0 0
+  8  
+  8 BEGIN 
+  9     X := DOUBLE(21); 
+ 12     WRITE(X)  // 应该输出 42 
+ 14 END. 
+  0 JMP 0 8
+  1 JMP 0 8
+  2 INI 0 3
+  3 LOD 0 -2
+  4 LOD 0 -2
+  5 OPR 0 2
+  6 RET 0 1
+  7 OPR 0 0
+  8 INI 0 4
+  9 LIT 0 21
+ 10 CAL 0 2
+ 11 STO 0 3
+ 12 LOD 0 3
+ 13 OPR 0 14
+ 14 OPR 0 15
+ 15 OPR 0 0
+~~~ RUN PL0 ~~~
+40
+~~~ END PL0 ~~~
+

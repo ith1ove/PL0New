@@ -1,0 +1,13 @@
+PROGRAM EX21;
+// 最简单的带参数函数测试
+VAR X;
+
+FUNCTION DOUBLE(N);
+BEGIN
+    RETURN N + N
+END;
+
+BEGIN
+    X := DOUBLE(21);
+    WRITE(X)  // 应该输出 42
+END.

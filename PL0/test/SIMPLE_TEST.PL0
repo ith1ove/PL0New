@@ -1,0 +1,13 @@
+PROGRAM SIMPLE_TEST;
+// 最简单的单参数测试
+VAR RESULT;
+
+FUNCTION DOUBLE(X);
+BEGIN
+    RETURN X + X
+END;
+
+BEGIN
+    RESULT := DOUBLE(5);
+    WRITE(RESULT)  // 应该输出 10
+END.

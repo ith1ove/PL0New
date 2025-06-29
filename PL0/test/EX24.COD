@@ -1,0 +1,63 @@
+=== COMPILE PL0 ===
+  0 PROGRAM EX24; 
+  0 // 最简单的递归测试 
+  0 VAR R; 
+  1  
+  1 FUNCTION F(N); 
+  1 BEGIN 
+  3     IF N <= 1 THEN 
+  6         RETURN 1 
+  8     ELSE 
+  9         RETURN N * F(N - 1) 
+ 14 END; 
+  2 INI 0 3
+  3 LOD 0 -1
+  4 LIT 0 1
+  5 OPR 0 13
+  6 JPC 0 10
+  7 LIT 0 1
+  8 RET 0 1
+  9 JMP 0 17
+ 10 LOD 0 -1
+ 11 LOD 0 -1
+ 12 LIT 0 1
+ 13 OPR 0 3
+ 14 CAL 1 2
+ 15 OPR 0 4
+ 16 RET 0 1
+ 17 OPR 0 0
+ 18  
+ 18 BEGIN 
+ 19     R := F(3); 
+ 22     WRITE(R) 
+ 24 END. 
+  0 JMP 0 18
+  1 JMP 0 18
+  2 INI 0 3
+  3 LOD 0 -1
+  4 LIT 0 1
+  5 OPR 0 13
+  6 JPC 0 10
+  7 LIT 0 1
+  8 RET 0 1
+  9 JMP 0 17
+ 10 LOD 0 -1
+ 11 LOD 0 -1
+ 12 LIT 0 1
+ 13 OPR 0 3
+ 14 CAL 1 2
+ 15 OPR 0 4
+ 16 RET 0 1
+ 17 OPR 0 0
+ 18 INI 0 4
+ 19 LIT 0 3
+ 20 CAL 0 2
+ 21 STO 0 3
+ 22 LOD 0 3
+ 23 OPR 0 14
+ 24 OPR 0 15
+ 25 OPR 0 0
+~~~ RUN PL0 ~~~
+2
+~~~ END PL0 ~~~
+

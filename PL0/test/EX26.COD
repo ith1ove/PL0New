@@ -1,0 +1,29 @@
+=== COMPILE PL0 ===
+  0 PROGRAM EX26; 
+  0 // 测试乘法运算 - 不使用递归 
+  0 VAR R; 
+  1  
+  1 FUNCTION GET_N(); 
+***             ^5
+***             ^7
+***              ^11
+***               ^13
+***               ^19
+  2 INI 0 3
+  3 OPR 0 0
+  4 BEGIN 
+  5     RETURN 3 
+***            ^40
+***            ^19
+  5 END; 
+***    ^8
+  6  
+  6 FUNCTION GET_TWO(); 
+  0 JMP 0 4
+  1 JMP 0 4
+  2 INI 0 3
+  3 OPR 0 0
+  4 INI 0 4
+  5 OPR 0 0
+***        ^9
+ERROR IN PL/0 PROGRAM

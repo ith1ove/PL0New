@@ -1,0 +1,29 @@
+=== COMPILE PL0 ===
+  0 PROGRAM EX25; 
+  0 // 测试简单的乘法而不使用递归 
+  0 VAR A, B, R; 
+  1  
+  1 FUNCTION GET_TWO(); 
+***             ^5
+***             ^7
+***                ^11
+***                 ^13
+***                 ^19
+  2 INI 0 3
+  3 OPR 0 0
+  4 BEGIN 
+  5     RETURN 2 
+***            ^40
+***            ^19
+  5 END; 
+***    ^8
+  6  
+  6 BEGIN 
+  0 JMP 0 4
+  1 JMP 0 4
+  2 INI 0 3
+  3 OPR 0 0
+  4 INI 0 6
+  5 OPR 0 0
+***     ^9
+ERROR IN PL/0 PROGRAM

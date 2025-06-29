@@ -1,0 +1,84 @@
+=== COMPILE PL0 ===
+  0 PROGRAM EX22; 
+  0 // 最终测试：验证函数功能的完整性 
+  0  
+  0 VAR RESULT; 
+  1  
+  1 FUNCTION ADD(A, B); 
+  1 BEGIN 
+  3     RETURN A + B 
+  5 END; 
+  2 INI 0 3
+  3 LOD 0 -2
+  4 LOD 0 -1
+  5 OPR 0 2
+  6 RET 0 1
+  7 OPR 0 0
+  8  
+  8 FUNCTION MULTIPLY(X, Y); 
+  8 BEGIN 
+ 10     RETURN X * Y 
+ 12 END; 
+  9 INI 0 3
+ 10 LOD 0 -2
+ 11 LOD 0 -1
+ 12 OPR 0 4
+ 13 RET 0 1
+ 14 OPR 0 0
+ 15  
+ 15 BEGIN 
+ 16     RESULT := ADD(10, 20); 
+ 20     WRITE(RESULT);  // 应该输出 30 
+ 23      
+ 23     RESULT := MULTIPLY(5, 6); 
+ 27     WRITE(RESULT);  // 应该输出 30 
+ 30      
+ 30     RESULT := ADD(MULTIPLY(3, 4), 18); 
+ 36     WRITE(RESULT);  // 应该输出 30 (12+18) 
+ 39 END. 
+  0 JMP 0 15
+  1 JMP 0 8
+  2 INI 0 3
+  3 LOD 0 -2
+  4 LOD 0 -1
+  5 OPR 0 2
+  6 RET 0 1
+  7 OPR 0 0
+  8 JMP 0 15
+  9 INI 0 3
+ 10 LOD 0 -2
+ 11 LOD 0 -1
+ 12 OPR 0 4
+ 13 RET 0 1
+ 14 OPR 0 0
+ 15 INI 0 4
+ 16 LIT 0 10
+ 17 LIT 0 20
+ 18 CAL 0 2
+ 19 STO 0 3
+ 20 LOD 0 3
+ 21 OPR 0 14
+ 22 OPR 0 15
+ 23 LIT 0 5
+ 24 LIT 0 6
+ 25 CAL 0 9
+ 26 STO 0 3
+ 27 LOD 0 3
+ 28 OPR 0 14
+ 29 OPR 0 15
+ 30 LIT 0 3
+ 31 LIT 0 4
+ 32 CAL 0 9
+ 33 LIT 0 18
+ 34 CAL 0 2
+ 35 STO 0 3
+ 36 LOD 0 3
+ 37 OPR 0 14
+ 38 OPR 0 15
+ 39 OPR 0 0
+~~~ RUN PL0 ~~~
+30
+30
+30
+~~~ END PL0 ~~~
+

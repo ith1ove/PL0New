@@ -1,0 +1,24 @@
+PROGRAM EX26;
+// 测试乘法运算 - 不使用递归
+VAR R;
+
+FUNCTION GET_N();
+BEGIN
+    RETURN 3
+END;
+
+FUNCTION GET_TWO();
+BEGIN
+    RETURN 2
+END;
+
+BEGIN
+    R := GET_N() * GET_TWO();
+    WRITE(R);  // 应该输出 6
+
+    R := 3 * GET_TWO();
+    WRITE(R);  // 应该输出 6
+
+    R := GET_N() * 2;
+    WRITE(R)   // 应该输出 6
+END.

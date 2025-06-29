@@ -1,0 +1,18 @@
+PROGRAM EX25;
+// 测试简单的乘法而不使用递归
+VAR A, B, R;
+
+FUNCTION GET_TWO();
+BEGIN
+    RETURN 2
+END;
+
+BEGIN
+    A := 3;
+    B := GET_TWO();
+    R := A * B;
+    WRITE(R);  // 应该输出 6
+
+    // 直接测试表达式
+    WRITE(3 * GET_TWO())  // 应该输出 6
+END.

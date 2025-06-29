@@ -1,0 +1,32 @@
+PROGRAM EX18;
+// 测试带参数的函数定义和调用
+VAR X, Y, Z;
+
+FUNCTION ADD(A, B);
+BEGIN
+    RETURN A + B
+END;
+
+FUNCTION MULTIPLY(A, B);
+BEGIN
+    RETURN A * B
+END;
+
+FUNCTION SQUARE(N);
+BEGIN
+    RETURN N * N
+END;
+
+BEGIN
+    X := ADD(5, 3);
+    WRITE(X);  // 应该输出 8
+
+    Y := MULTIPLY(4, 6);
+    WRITE(Y);  // 应该输出 24
+
+    Z := SQUARE(7);
+    WRITE(Z);  // 应该输出 49
+
+    // 嵌套函数调用
+    WRITE(ADD(SQUARE(3), MULTIPLY(2, 4))); // 应该输出 17 (9+8)
+END.

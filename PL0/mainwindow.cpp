@@ -59,7 +59,7 @@ void MainWindow::createPL0Page(){
     sourceLabel = new QLabel(tr("源程序名"));
     sourceLabel->setFont(qfont);
 
-    sourceLineEdit = new QLineEdit(tr("EX09"));
+    sourceLineEdit = new QLineEdit(tr("EX18"));
     sourceLineEdit->setFont(qfont1);
     sourceLineEdit->setToolTip(tr("输入要编译的PL0程序文件名（不含扩展名）")); // 添加工具提示
 

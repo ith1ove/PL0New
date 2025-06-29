@@ -1,0 +1,25 @@
+PROGRAM EX17;
+// 测试简单的函数定义和调用（无参数）
+VAR X, Y;
+
+FUNCTION F1();
+BEGIN
+    RETURN 42
+END;
+
+FUNCTION F2();
+VAR A;
+BEGIN
+    A := 10;
+    RETURN A + 5
+END;
+
+BEGIN
+    X := F1();
+    WRITE(X);  // 应该输出 42
+
+    Y := F2();
+    WRITE(Y);  // 应该输出 15
+
+    WRITE(F1() + F2()); // 应该输出 57
+END.

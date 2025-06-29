@@ -1,0 +1,16 @@
+PROGRAM EX24;
+// 最简单的递归测试
+VAR R;
+
+FUNCTION F(N);
+BEGIN
+    IF N <= 1 THEN
+        RETURN 1
+    ELSE
+        RETURN N * F(N - 1)
+END;
+
+BEGIN
+    R := F(3);
+    WRITE(R)
+END.

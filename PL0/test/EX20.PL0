@@ -1,0 +1,28 @@
+PROGRAM EX20;
+// 简单的过程和函数混用测试
+VAR X, Y, RESULT;
+
+// 无参数过程
+PROCEDURE HELLO;
+BEGIN
+    WRITE(100)
+END;
+
+// 有参数函数
+FUNCTION DOUBLE(N);
+BEGIN
+    RETURN N * 2
+END;
+
+// 主程序
+BEGIN
+    X := 5;
+
+    CALL HELLO;  // 调用过程，输出100
+
+    RESULT := DOUBLE(X);  // 调用函数，计算5*2=10
+    WRITE(RESULT);  // 输出10
+
+    Y := DOUBLE(7);  // 再次调用函数，计算7*2=14
+    WRITE(Y)  // 输出14
+END.

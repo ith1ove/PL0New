@@ -1,0 +1,110 @@
+=== COMPILE PL0 ===
+  0 PROGRAM EX18; 
+  0 // 测试带参数的函数定义和调用 
+  0 VAR X, Y, Z; 
+  1  
+  1 FUNCTION ADD(A, B); 
+  1 BEGIN 
+  3     RETURN A + B 
+  5 END; 
+  2 INI 0 3
+  3 LOD 0 -2
+  4 LOD 0 -1
+  5 OPR 0 2
+  6 RET 0 1
+  7 OPR 0 0
+  8  
+  8 FUNCTION MULTIPLY(A, B); 
+  8 BEGIN 
+ 10     RETURN A * B 
+ 12 END; 
+  9 INI 0 3
+ 10 LOD 0 -2
+ 11 LOD 0 -1
+ 12 OPR 0 4
+ 13 RET 0 1
+ 14 OPR 0 0
+ 15  
+ 15 FUNCTION SQUARE(N); 
+ 15 BEGIN 
+ 17     RETURN N * N 
+ 19 END; 
+ 16 INI 0 3
+ 17 LOD 0 -1
+ 18 LOD 0 -1
+ 19 OPR 0 4
+ 20 RET 0 1
+ 21 OPR 0 0
+ 22  
+ 22 BEGIN 
+ 23     X := ADD(5, 3); 
+ 27     WRITE(X);  // 应该输出 8 
+ 30  
+ 30     Y := MULTIPLY(4, 6); 
+ 34     WRITE(Y);  // 应该输出 24 
+ 37  
+ 37     Z := SQUARE(7); 
+ 40     WRITE(Z);  // 应该输出 49 
+ 43  
+ 43     // 嵌套函数调用 
+ 43     WRITE(ADD(SQUARE(3), MULTIPLY(2, 4))); // 应该输出 17 (9+8) 
+ 51 END. 
+  0 JMP 0 22
+  1 JMP 0 8
+  2 INI 0 3
+  3 LOD 0 -2
+  4 LOD 0 -1
+  5 OPR 0 2
+  6 RET 0 1
+  7 OPR 0 0
+  8 JMP 0 15
+  9 INI 0 3
+ 10 LOD 0 -2
+ 11 LOD 0 -1
+ 12 OPR 0 4
+ 13 RET 0 1
+ 14 OPR 0 0
+ 15 JMP 0 22
+ 16 INI 0 3
+ 17 LOD 0 -1
+ 18 LOD 0 -1
+ 19 OPR 0 4
+ 20 RET 0 1
+ 21 OPR 0 0
+ 22 INI 0 6
+ 23 LIT 0 5
+ 24 LIT 0 3
+ 25 CAL 0 2
+ 26 STO 0 3
+ 27 LOD 0 3
+ 28 OPR 0 14
+ 29 OPR 0 15
+ 30 LIT 0 4
+ 31 LIT 0 6
+ 32 CAL 0 9
+ 33 STO 0 4
+ 34 LOD 0 4
+ 35 OPR 0 14
+ 36 OPR 0 15
+ 37 LIT 0 7
+ 38 CAL 0 16
+ 39 STO 0 5
+ 40 LOD 0 5
+ 41 OPR 0 14
+ 42 OPR 0 15
+ 43 LIT 0 3
+ 44 CAL 0 16
+ 45 LIT 0 2
+ 46 LIT 0 4
+ 47 CAL 0 9
+ 48 CAL 0 2
+ 49 OPR 0 14
+ 50 OPR 0 15
+ 51 OPR 0 0
+~~~ RUN PL0 ~~~
+8
+24
+49
+12
+~~~ END PL0 ~~~
+

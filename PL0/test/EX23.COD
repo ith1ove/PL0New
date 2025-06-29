@@ -1,0 +1,39 @@
+=== COMPILE PL0 ===
+  0 PROGRAM EX23; 
+  0 // 简单递归测试 - 诊断递归问题 
+  0 VAR RESULT; 
+  1  
+  1 FUNCTION SIMPLE_FACT(N); 
+***                ^5
+***                ^7
+***                    ^11
+***                     ^13
+***                     ^19
+  2 INI 0 3
+  3 OPR 0 0
+  4 BEGIN 
+  5     IF N <= 1 THEN 
+***        ^11
+  7         RETURN 1 
+***                ^40
+***                ^19
+  8     ELSE 
+  8         RETURN N * SIMPLE_FACT(N - 1) 
+***                ^40
+***                ^19
+  9 END; 
+***    ^8
+ 10  
+ 10 BEGIN 
+  0 JMP 0 4
+  1 JMP 0 4
+  2 INI 0 3
+  3 OPR 0 0
+  4 INI 0 4
+  5 LIT 0 1
+  6 OPR 0 13
+  7 JPC 0 9
+  8 JMP 0 9
+  9 OPR 0 0
+***     ^9
+ERROR IN PL/0 PROGRAM

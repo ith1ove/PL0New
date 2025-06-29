@@ -1,0 +1,49 @@
+PROGRAM EX20;
+// 测试过程和函数的混合使用
+VAR X, Y, RESULT;
+
+PROCEDURE PRINT_HELLO;
+BEGIN
+    WRITE(888)  // 输出888表示Hello
+END;
+
+FUNCTION PRINT_AND_RETURN(N);
+BEGIN
+    WRITE(N);
+    RETURN N
+END;
+
+FUNCTION MAX(A, B);
+BEGIN
+    IF A > B THEN
+        RETURN A
+    ELSE
+        RETURN B
+END;
+
+FUNCTION MIN(A, B);
+BEGIN
+    IF A < B THEN
+        RETURN A
+    ELSE
+        RETURN B
+END;
+
+BEGIN
+    X := 15;
+    Y := 25;
+
+    CALL PRINT_HELLO;  // 调用无参过程，输出888
+
+    RESULT := PRINT_AND_RETURN(X);  // 输出15，并返回15
+
+    RESULT := MAX(X, Y);
+    WRITE(RESULT);  // 应该输出25
+
+    RESULT := MIN(X, Y);
+    WRITE(RESULT);  // 应该输出15
+
+    // 嵌套调用
+    RESULT := MAX(MIN(30, 20), MAX(10, 5));
+    WRITE(RESULT)   // 应该输出20
+END.

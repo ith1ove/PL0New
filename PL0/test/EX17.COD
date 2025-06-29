@@ -1,0 +1,76 @@
+=== COMPILE PL0 ===
+  0 PROGRAM EX17; 
+  0 // 测试简单的函数定义和调用（无参数） 
+  0 VAR X, Y; 
+  1  
+  1 FUNCTION F1(); 
+  1 BEGIN 
+  3     RETURN 42 
+  4 END; 
+  2 INI 0 3
+  3 LIT 0 42
+  4 RET 0 1
+  5 OPR 0 0
+  6  
+  6 FUNCTION F2(); 
+  6 VAR A; 
+  7 BEGIN 
+  8     A := 10; 
+ 10     RETURN A + 5 
+ 12 END; 
+  7 INI 0 4
+  8 LIT 0 10
+  9 STO 0 3
+ 10 LOD 0 3
+ 11 LIT 0 5
+ 12 OPR 0 2
+ 13 RET 0 1
+ 14 OPR 0 0
+ 15  
+ 15 BEGIN 
+ 16     X := F1(); 
+ 18     WRITE(X);  // 应该输出 42 
+ 21  
+ 21     Y := F2(); 
+ 23     WRITE(Y);  // 应该输出 15 
+ 26  
+ 26     WRITE(F1() + F2()); // 应该输出 57 
+ 31 END. 
+  0 JMP 0 15
+  1 JMP 0 6
+  2 INI 0 3
+  3 LIT 0 42
+  4 RET 0 1
+  5 OPR 0 0
+  6 JMP 0 15
+  7 INI 0 4
+  8 LIT 0 10
+  9 STO 0 3
+ 10 LOD 0 3
+ 11 LIT 0 5
+ 12 OPR 0 2
+ 13 RET 0 1
+ 14 OPR 0 0
+ 15 INI 0 5
+ 16 CAL 0 2
+ 17 STO 0 3
+ 18 LOD 0 3
+ 19 OPR 0 14
+ 20 OPR 0 15
+ 21 CAL 0 7
+ 22 STO 0 4
+ 23 LOD 0 4
+ 24 OPR 0 14
+ 25 OPR 0 15
+ 26 CAL 0 2
+ 27 CAL 0 7
+ 28 OPR 0 2
+ 29 OPR 0 14
+ 30 OPR 0 15
+ 31 OPR 0 0
+~~~ RUN PL0 ~~~
+42
+15
+57
+~~~ END PL0 ~~~
+
